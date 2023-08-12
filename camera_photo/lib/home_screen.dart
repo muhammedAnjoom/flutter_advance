@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:camera_photo/full_screen_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -45,26 +46,44 @@ class _HomeScreenState extends State<HomeScreen> {
                         context: context,
                         builder: (ctx) {
                           return AlertDialog(
-                            title: Text("Delete"),
-                            content: Text("Delete All Image from view"),
+                            title: const Text("Delete"),
+                            content: const Text("Delete All Image from view"),
                             actions: [
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(ctx).pop();
                                 },
-                                child: Text("no"),
+                                child: Text(
+                                  "no",
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  final SharedPreferences preferences =
+                                      await SharedPreferences.getInstance();
+                                  setState(() {
+                                    preferences.clear();
+                                    listImages.clear();
+                                  });
+                                  Navigator.of(ctx).pop();
+                                },
+                                child: Text(
+                                  "Yes",
+                                  style: TextStyle(color: Colors.red),
+                                ),
                               )
                             ],
                           );
                         },
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       "Delete All",
                     ),
                   ),
                 ),
-                PopupMenuItem(
+                const PopupMenuItem(
                   child: Text("About"),
                 )
               ];
@@ -76,9 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           _loadImage(ImageSource.camera);
-          await GallerySaver.saveImage(
-            _image.toString(),
-          );
+          setState(() {
+            GallerySaver.saveImage(_image ?? "");
+          });
         },
         child: const Icon(Icons.camera),
       ),
@@ -95,9 +114,16 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (context, index) {
               // print(listImages);
               final image = listImages[index];
-              return Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(image: FileImage(File(image)))),
+              return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => FullScreen(image: image),
+                  ));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(image: FileImage(File(image)))),
+                ),
               );
             },
           ),
@@ -110,8 +136,11 @@ class _HomeScreenState extends State<HomeScreen> {
     List<String> imgess = [];
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     // int count=0;
-    final XFile? image =
-        await ImagePicker().pickImage(source: imageSource); // var count = cou
+    final XFile? image = await ImagePicker().pickImage(source: imageSource);
+
+    setState(() {
+      _image = image!.path;
+    }); // var count = cou
 
     imgess.add(image!.path);
     setState(() {
