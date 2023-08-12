@@ -35,11 +35,41 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-              onPressed: () async {
-                // _getImageSave();
-              },
-              icon: Icon(Icons.save))
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) {
+                          return AlertDialog(
+                            title: Text("Delete"),
+                            content: Text("Delete All Image from view"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(ctx).pop();
+                                },
+                                child: Text("no"),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Text(
+                      "Delete All",
+                    ),
+                  ),
+                ),
+                PopupMenuItem(
+                  child: Text("About"),
+                )
+              ];
+            },
+          )
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -50,14 +80,18 @@ class _HomeScreenState extends State<HomeScreen> {
             _image.toString(),
           );
         },
-        child: Icon(Icons.camera),
+        child: const Icon(Icons.camera),
       ),
       body: SafeArea(
         child: Container(
+          padding: const EdgeInsets.all(10),
           child: GridView.builder(
             itemCount: listImages.length,
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 10,mainAxisSpacing: 10),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 3 / 4),
             itemBuilder: (context, index) {
               // print(listImages);
               final image = listImages[index];
@@ -101,5 +135,3 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 }
-
-
