@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       showDialog(
                         context: context,
-                        builder: (ctx) {
+                        builder: (ctx) { 
                           return AlertDialog(
                             title: const Text("Delete"),
                             content: const Text("Delete All Image from view"),
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onPressed: () {
                                   Navigator.of(ctx).pop();
                                 },
-                                child: Text(
+                                child: const Text(
                                   "no",
                                   style: TextStyle(color: Colors.green),
                                 ),
@@ -66,9 +66,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     preferences.clear();
                                     listImages.clear();
                                   });
+                                 const snak=   SnackBar(content: Text("images is deleted"),backgroundColor: Colors.red,);
+                                 ScaffoldMessenger.of(context).showSnackBar(snak);
                                   Navigator.of(ctx).pop();
                                 },
-                                child: Text(
+                                child: const Text(
                                   "Yes",
                                   style: TextStyle(color: Colors.red),
                                 ),
