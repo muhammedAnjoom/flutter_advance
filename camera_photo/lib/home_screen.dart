@@ -6,12 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:local_image_provider/local_image_provider.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:photo_manager/photo_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:local_image_provider/local_image_provider.dart' as lip;
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -42,16 +37,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 PopupMenuItem(
                   child: GestureDetector(
                     onTap: () {
-                      showDialog(
+                      final _result= showDialog(
                         context: context,
-                        builder: (ctx) { 
+                        builder: (ctx1) {
                           return AlertDialog(
                             title: const Text("Delete"),
                             content: const Text("Delete All Image from view"),
                             actions: [
                               TextButton(
                                 onPressed: () {
-                                  Navigator.of(ctx).pop();
+                                  Navigator.of(ctx1).pop();
                                 },
                                 child: const Text(
                                   "no",
@@ -66,9 +61,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     preferences.clear();
                                     listImages.clear();
                                   });
-                                 const snak=   SnackBar(content: Text("images is deleted"),backgroundColor: Colors.red,);
-                                 ScaffoldMessenger.of(context).showSnackBar(snak);
-                                  Navigator.of(ctx).pop();
+                                  const snak = SnackBar(
+                                    content: Text("images is deleted"),
+                                    backgroundColor: Colors.red,
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snak);
+                                  Navigator.of(ctx1).pop();
                                 },
                                 child: const Text(
                                   "Yes",
@@ -79,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         },
                       );
+                      // Navigator.of(ctx,rootNavigator: true).pop(_result);
                     },
                     child: const Text(
                       "Delete All",
@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          _loadImage(ImageSource.camera);
+          await _loadImage(ImageSource.camera);
           setState(() {
             GallerySaver.saveImage(_image ?? "");
           });
