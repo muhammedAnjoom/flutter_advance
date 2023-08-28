@@ -1,13 +1,31 @@
+import 'package:add_note/data/data.dart';
+import 'package:add_note/model/add_data_model.dart';
 import 'package:add_note/screen/add_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final List<AddModel> notList = [];
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      final _notelist = await NoteDb().getAllNotes();
+      notList.clear();
+      setState(() {
+        notList.addAll(_notelist);
+      });
+
+      // print(notList[0].title);
+      // print(_notelist.length);
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text("All Notes"),
@@ -16,54 +34,23 @@ class HomeScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: GridView.builder(
-            itemCount: 10,
+            itemCount: notList.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+              crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+            ),
             itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => AddScreen(
-                      type: ActionType.editNote,
-                    ),
-                  ));
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              "heading title",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              )),
-                        ],
-                      ),
-                      Text(
-                        "’m curious, MERN was mentioned as the most popular stack, and while I have years of experience with express.js, I always thought nestjs and other stuff such as SSR (Next.js) would be a much better alternative than just expressjs + react. Is it better? I genuinely thought next.js was a better way of doing stuff, especially for someone who loves SSR.",
-                        maxLines: 5,
-                        style: TextStyle(fontSize: 16),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
+              final note = notList[index];
+              if(note.sId==null){
+                return SizedBox();
+              }else{
+              return GridItem(
+                id: note.sId!,
+                title: note.title ?? "no title",
+                content: note.content ?? "no content",
               );
+              }
             },
           ),
         ),
@@ -82,3 +69,70 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+class GridItem extends StatelessWidget {
+  GridItem({
+    super.key,
+    required this.title,
+    required this.content, required this.id,
+  });
+  final String id;
+  final String title;
+  final String content;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (ctx) => AddScreen(
+            type: ActionType.editNote,
+          ),
+        ));
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+            border: Border.all(),
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    )),
+              ],
+            ),
+            Text(
+              content,
+              maxLines: 5,
+              style: TextStyle(fontSize: 16),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+// {
+//   "data":[
+//     {
+//     "_id":"id01",
+//     "title":"daliy",
+//     "content":"sample"
+//     },
+//   ]
+// }

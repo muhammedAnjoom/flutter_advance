@@ -1,3 +1,5 @@
+import 'package:add_note/data/data.dart';
+import 'package:add_note/model/add_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -16,9 +18,15 @@ class AddScreen extends StatelessWidget {
   final ActionType type;
   String? id;
 
+  final _titleController = TextEditingController();
+  final _contentController = TextEditingController();
+
+  final _scafflodKey  = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scafflodKey,
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -34,6 +42,7 @@ class AddScreen extends StatelessWidget {
             onPressed: () {
               switch (type) {
                 case ActionType.addNote:
+                  saveNote();
                   break;
                 case ActionType.editNote:
                   break;
@@ -56,6 +65,7 @@ class AddScreen extends StatelessWidget {
         child: Column(
           children: [
             TextField(
+              controller: _titleController,
               decoration: InputDecoration(
                   border: OutlineInputBorder(), hintText: "Title"),
             ),
@@ -63,6 +73,7 @@ class AddScreen extends StatelessWidget {
               height: 20,
             ),
             TextFormField(
+              controller: _contentController,
               decoration: InputDecoration(
                   hintText: "Content", border: OutlineInputBorder()),
               minLines: 6,
@@ -73,5 +84,23 @@ class AddScreen extends StatelessWidget {
         ),
       )),
     );
+  }
+
+  Future<void> saveNote() async {
+    final title = _titleController.text;
+    final content = _contentController.text;
+
+    final newNote =  AddModel.create(
+      sId: DateTime.now().millisecondsSinceEpoch.toString(),
+      title: title,
+      content: content,
+    );
+   final newData = await NoteDb().createNote(newNote);
+   if(newData!=null){
+    print("note save");
+    Navigator.of(_scafflodKey.currentContext!).pop();
+   }else{
+    print("Error while saving note");
+   }
   }
 }
