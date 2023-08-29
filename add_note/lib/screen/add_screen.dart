@@ -1,5 +1,6 @@
 import 'package:add_note/data/data.dart';
 import 'package:add_note/model/add_data_model.dart';
+import 'package:add_note/screen/home_scren.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -21,10 +22,21 @@ class AddScreen extends StatelessWidget {
   final _titleController = TextEditingController();
   final _contentController = TextEditingController();
 
-  final _scafflodKey  = GlobalKey<ScaffoldState>();
+  final _scafflodKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    if (type == ActionType.editNote) {
+      if (id == null) {
+        Navigator.of(context).pop();
+      }
+      final note = NoteDb.instance.getNoteById(id!);
+      if (note == null) {
+        Navigator.of(context).pop();
+      }
+      _titleController.text = note!.title ?? 'not title';
+      _contentController.text = note.content ?? "no content";
+    }
     return Scaffold(
       key: _scafflodKey,
       appBar: AppBar(
@@ -45,6 +57,7 @@ class AddScreen extends StatelessWidget {
                   saveNote();
                   break;
                 case ActionType.editNote:
+                  editNote();
                   break;
               }
             },
@@ -90,17 +103,30 @@ class AddScreen extends StatelessWidget {
     final title = _titleController.text;
     final content = _contentController.text;
 
-    final newNote =  AddModel.create(
+    final newNote = AddModel.create(
       sId: DateTime.now().millisecondsSinceEpoch.toString(),
       title: title,
       content: content,
     );
-   final newData = await NoteDb().createNote(newNote);
-   if(newData!=null){
-    print("note save");
+    final newData = await NoteDb().createNote(newNote);
+    if (newData != null) {
+      print("note save");
+      Navigator.of(_scafflodKey.currentContext!).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (ctx) => HomeScreen()), (route) => false);
+    } else {
+      print("Error while saving note");
+    }
+  }
+
+  Future<void> editNote() async {
+    final title = _titleController.text;
+    final content = _contentController.text;
+    final editedNote = AddModel(
+      title: title,
+      content: content,
+      sId: id,
+    );
+    NoteDb.instance.updateNote(editedNote);
     Navigator.of(_scafflodKey.currentContext!).pop();
-   }else{
-    print("Error while saving note");
-   }
   }
 }

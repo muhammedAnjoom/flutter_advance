@@ -1,30 +1,20 @@
 import 'package:add_note/data/data.dart';
-import 'package:add_note/model/add_data_model.dart';
+// import 'package:add_note/model/add_data_model.dart';
 import 'package:add_note/screen/add_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final List<AddModel> notList = [];
-
+  // final List<AddModel> notList = [];
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      final _notelist = await NoteDb().getAllNotes();
-      notList.clear();
-      setState(() {
-        notList.addAll(_notelist);
-      });
+    // print(NoteDb.instance.noteListNotfier.value);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await NoteDb.instance.getAllNotes();
 
-      // print(notList[0].title);
-      // print(_notelist.length);
+      // print(result);
     });
     return Scaffold(
       appBar: AppBar(
@@ -33,26 +23,30 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10),
-          child: GridView.builder(
-            itemCount: notList.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-            ),
-            itemBuilder: (context, index) {
-              final note = notList[index];
-              if(note.sId==null){
-                return SizedBox();
-              }else{
-              return GridItem(
-                id: note.sId!,
-                title: note.title ?? "no title",
-                content: note.content ?? "no content",
-              );
-              }
-            },
-          ),
+          child: ValueListenableBuilder(
+              valueListenable: NoteDb.instance.noteListNotfier,
+              builder: (context, list, _) {
+                return GridView.builder(
+                  itemCount: list.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                  ),
+                  itemBuilder: (context, index) {
+                    final note = list[index];
+                    if (note.sId == null) {
+                      return SizedBox();
+                    } else {
+                      return GridItem(
+                        id: note.sId!,
+                        title: note.title ?? "no title",
+                        content: note.content ?? "no content",
+                      );
+                    }
+                  },
+                );
+              }),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -74,7 +68,8 @@ class GridItem extends StatelessWidget {
   GridItem({
     super.key,
     required this.title,
-    required this.content, required this.id,
+    required this.content,
+    required this.id,
   });
   final String id;
   final String title;
@@ -87,6 +82,7 @@ class GridItem extends StatelessWidget {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (ctx) => AddScreen(
             type: ActionType.editNote,
+            id: id,
           ),
         ));
       },
@@ -108,7 +104,9 @@ class GridItem extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      NoteDb.instance.deleteNote(id);
+                    },
                     icon: Icon(
                       Icons.delete,
                       color: Colors.red,

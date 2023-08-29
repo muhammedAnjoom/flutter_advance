@@ -5,5 +5,5 @@ class Url {
 
   String updateNote = "/note/update";
 
-  String deletNote = "/note/delete/{id}";
+  String deletNote = "/note/delete/";
 }
