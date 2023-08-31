@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
               height: 400,
             ),
             Container(
-                padding: EdgeInsets.symmetric(horizontal: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -25,14 +25,31 @@ class SplashScreen extends StatelessWidget {
                       
                       style: gPrimaryFont.copyWith(fontSize: 14,color: Colors.black54,letterSpacing: 1.5),
                     ),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
                     Text(
                       "it's\nCooking\nTime!",
                       style: headingFont.copyWith(
+                        height: 1.2,
+                        
                         letterSpacing: 1.5,
-                        fontSize: 45
+                        fontSize: 50
                       ),
                     ),
+                    SizedBox(height: 10,),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 40,vertical: 18),
+                      decoration: BoxDecoration(
+                        color: Color(0xff42B883),
+                        borderRadius: BorderRadius.all(Radius.circular(40))
+                        
+                      ),
+                      child: Text("Get Started",style: gPrimaryFont.copyWith(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2
+                      ),),
+                    )
                   ],
                 ))
           ],
