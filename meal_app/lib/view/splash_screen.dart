@@ -35,7 +35,7 @@ class SplashScreen extends StatelessWidget {
                         fontSize: 50
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(height: 15,),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 40,vertical: 18),
                       decoration: BoxDecoration(
