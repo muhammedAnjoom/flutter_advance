@@ -34,22 +34,27 @@ class HomeScreen extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(
+                decoration:  InputDecoration(
+                    border:const  OutlineInputBorder(
                       borderSide: BorderSide.none,
                       
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
+                    hintText: "Search for your qurey",
+                    hintStyle: gPrimaryFont.copyWith(
+                      color: const Color(0xffBEBCAC)
+                    ),
+                    prefixIcon: const Icon(Icons.search),
                     filled: true,
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide.none
                     ),
-                    enabledBorder: OutlineInputBorder(
+                    enabledBorder:const  OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide.none
                     ),
-                    fillColor: Color(0xffF3F3F3),
+                    fillColor: const Color(0xffF3F3F3),
                     focusColor: Colors.grey),
               )
             ],
