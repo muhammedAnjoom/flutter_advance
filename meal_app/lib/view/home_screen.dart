@@ -1,6 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meal_app/view/core/font.dart';
+import 'package:meal_app/view/widget/recipe_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -69,41 +73,25 @@ class HomeScreen extends StatelessWidget {
                 style: gPrimaryFont.copyWith(
                     fontSize: 22, fontWeight: FontWeight.w600),
               ),
-              Container(
-                decoration: BoxDecoration(
-                    // color: Colors.red,
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          "https://images.unsplash.com/photo-1630851840633-f96999247032?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                width: 180,
-                height: 220,
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Container(
-                        color: Colors.red,
-                        width: double.infinity,
-                        height: 80,
-                      ),
-                      Spacer(),
-                      Row(
-                        children: [
-                          Spacer(),
-                          Container(
-                            padding: EdgeInsets.symmetric(vertical: 4,horizontal: 10),
-                            color: Colors.red,
-                            child: Text("4.8"),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                height: 240,
+                width: double.infinity,
+                child: ListView.builder(
+                  itemCount: 5,
+                  // shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: RecipeCard(),
+                    );
+                  },
                 ),
-              )
+              ),
+              // SizedBox(height: 100,)
             ],
           ),
         ),
