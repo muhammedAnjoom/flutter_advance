@@ -34,29 +34,32 @@ class HomeScreen extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
-                decoration:  InputDecoration(
-                    border:const  OutlineInputBorder(
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
-                      
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     hintText: "Search for your qurey",
-                    hintStyle: gPrimaryFont.copyWith(
-                      color: const Color(0xffBEBCAC)
+                    hintStyle:
+                        gPrimaryFont.copyWith(color: const Color(0xffBEBCAC)),
+                    prefixIcon: SvgPicture.asset(
+                      "assets/icons/search.svg",
+                      color: Color(0xff150F0E,),
+                      width: 30,
+                      height: 30,
+                      fit: BoxFit.scaleDown,
                     ),
-                    prefixIcon: const Icon(Icons.search),
                     filled: true,
                     focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide.none
-                    ),
-                    enabledBorder:const  OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide.none
-                    ),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderSide: BorderSide.none),
+                    enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderSide: BorderSide.none),
                     fillColor: const Color(0xffF3F3F3),
                     focusColor: Colors.grey),
-              )
+              ),
+              
             ],
           ),
         ),
