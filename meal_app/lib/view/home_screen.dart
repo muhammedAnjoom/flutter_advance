@@ -91,6 +91,10 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
               ),
+              Text("Reat Iteam",style: gPrimaryFont.copyWith(
+                fontSize: 22,
+                fontWeight: FontWeight.w600
+              ),)
               // SizedBox(height: 100,)
             ],
           ),
