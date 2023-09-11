@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  "What would you\nlike ti cook?",
+                  "What would you\nlike to cook?",
                   style: headingFont.copyWith(
                       fontSize: 28, fontWeight: FontWeight.w400),
                 ),
