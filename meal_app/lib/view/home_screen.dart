@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:meal_app/controller/data.dart';
+import 'package:meal_app/model/meal_model.dart';
 import 'package:meal_app/view/core/font.dart';
 import 'package:meal_app/view/decription_screen.dart';
 import 'package:meal_app/view/widget/recipe_card.dart';
@@ -10,10 +12,17 @@ import 'package:meal_app/view/widget/recipe_card.dart';
 import 'widget/recommended_card.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  ValueNotifier<List<Categories>> categoriesData = ValueNotifier([]);
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final result = await MealDB().getMealData();
+      categoriesData.value.addAll(result);
+      categoriesData.notifyListeners();
+    });
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -83,25 +92,36 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 240,
                   width: double.infinity,
-                  child: ListView.builder(
-                    itemCount: 5,
-                    // shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (ctx) => DescriptionScreen(),
+                  child: ValueListenableBuilder(
+                    valueListenable: categoriesData,
+                    builder: (context,item,_) {
+                      return ListView.builder(
+                        itemCount: item.length,
+                        // shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final data = item[index];
+                          print(data.strCategory);
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (ctx) => DescriptionScreen(),
+                                  ),
+                                );
+                              },
+                              child: RecipeCard(
+                                image: data.strCategoryThumb!,
+                                title: data.strCategory!,
+                                decription: data.strCategoryDescription!,
                               ),
-                            );
-                          },
-                          child: RecipeCard(),
-                        ),
+                            ),
+                          );
+                        },
                       );
-                    },
+                    }
                   ),
                 ),
                 SizedBox(
