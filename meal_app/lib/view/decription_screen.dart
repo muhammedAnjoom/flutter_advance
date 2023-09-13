@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meal_app/view/core/font.dart';
 
+import 'widget/Ingedients_card.dart';
+import 'widget/emoji_card.dart';
+
 class DescriptionScreen extends StatelessWidget {
   const DescriptionScreen({super.key});
 
@@ -15,8 +18,31 @@ class DescriptionScreen extends StatelessWidget {
             "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
             fit: BoxFit.cover,
           ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 60,
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: SvgPicture.asset(
+                    "assets/icons/left-arrow.svg",
+                    width: 50,
+                    height: 50,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
           SizedBox.expand(
             child: DraggableScrollableSheet(
+              initialChildSize: .60,
+              minChildSize: .3,
+              maxChildSize: .6,
+              expand: false,
               builder: (context, scrollController) {
                 return Container(
                   decoration: BoxDecoration(
@@ -58,7 +84,12 @@ class DescriptionScreen extends StatelessWidget {
                               backgroundColor: Colors.orange.withOpacity(0.50),
                               title: "MEDIUM",
                             ),
-                            EmojiCard(icon: "assets/icons/fire.svg", colors: Colors.blue[800]!, backgroundColor: Colors.blue.withOpacity(0.50), title: "300/cal")
+                            EmojiCard(
+                              icon: "assets/icons/fire.svg",
+                              colors: Colors.blue[800]!,
+                              backgroundColor: Colors.blue.withOpacity(0.50),
+                              title: "300/cal",
+                            )
                           ],
                         ),
                         SizedBox(
@@ -68,7 +99,7 @@ class DescriptionScreen extends StatelessWidget {
                           controller: scrollController,
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
-                          // physics: NeverScrollableScrollPhysics(),
+                          physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             return Ingredients();
                           },
@@ -96,81 +127,6 @@ class DescriptionScreen extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-}
-
-class EmojiCard extends StatelessWidget {
-  const EmojiCard({
-    super.key,
-    required this.icon,
-    required this.colors,
-    required this.backgroundColor,
-    required this.title,
-  });
-
-  final String icon;
-  final Color colors;
-  final Color backgroundColor;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 120,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          Expanded(
-            child: SvgPicture.asset(
-              icon,
-              width: 60,
-              height: 60,
-            ),
-          ),
-          Text(
-            title,
-            style: gPrimaryFont.copyWith(fontSize: 16, color: colors),
-          ),
-          SizedBox(
-            height: 10,
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class Ingredients extends StatelessWidget {
-  const Ingredients({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CircleAvatar(
-          radius: 5,
-          backgroundColor: Colors.amber[800],
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: Text(
-            "4 boneless skinless chicken breats kosher salt",
-            style: gPrimaryFont.copyWith(
-                fontSize: 16,
-                color: Colors.grey[800],
-                overflow: TextOverflow.ellipsis),
-          ),
-        )
-      ],
     );
   }
 }

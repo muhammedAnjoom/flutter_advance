@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/view/core/font.dart';
+import 'package:meal_app/view/home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -22,33 +23,44 @@ class SplashScreen extends StatelessWidget {
                   children: [
                     Text(
                       "25K+ PREMIUM RECIPES",
-                      
-                      style: gPrimaryFont.copyWith(fontSize: 14,color: Colors.black54,letterSpacing: 1.5),
+                      style: gPrimaryFont.copyWith(
+                          fontSize: 14,
+                          color: Colors.black54,
+                          letterSpacing: 1.5),
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Text(
                       "it's\nCooking\nTime!",
                       style: headingFont.copyWith(
-                        height: 1.2,
-                        
-                        letterSpacing: 1.5,
-                        fontSize: 50
-                      ),
+                          height: 1.2, letterSpacing: 1.5, fontSize: 50),
                     ),
-                    SizedBox(height: 15,),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 40,vertical: 18),
-                      decoration: BoxDecoration(
-                        color: Color(0xff42B883),
-                        borderRadius: BorderRadius.all(Radius.circular(40))
-                        
+                    SizedBox(
+                      height: 15,
+                    ),
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (ctx) => HomeScreen(),
+                          ),
+                          (route) => false),
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 18),
+                        decoration: BoxDecoration(
+                            color: Color(0xff42B883),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(40))),
+                        child: Text(
+                          "Get Started",
+                          style: gPrimaryFont.copyWith(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.2),
+                        ),
                       ),
-                      child: Text("Get Started",style: gPrimaryFont.copyWith(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.2
-                      ),),
                     )
                   ],
                 ))

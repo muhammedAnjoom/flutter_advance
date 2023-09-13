@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meal_app/view/core/font.dart';
+import 'package:meal_app/view/decription_screen.dart';
 import 'package:meal_app/view/widget/recipe_card.dart';
 
 import 'widget/recommended_card.dart';
@@ -89,7 +90,16 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: RecipeCard(),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (ctx) => DescriptionScreen(),
+                              ),
+                            );
+                          },
+                          child: RecipeCard(),
+                        ),
                       );
                     },
                   ),
@@ -133,5 +143,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-
