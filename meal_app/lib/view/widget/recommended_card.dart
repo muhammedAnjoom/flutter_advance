@@ -6,8 +6,11 @@ import '../core/font.dart';
 
 class RecommendedCard extends StatelessWidget {
   const RecommendedCard({
-    super.key,
+    super.key, this.image, this.title,
   });
+
+  final String? image;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class RecommendedCard extends StatelessWidget {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage(
-                    "https://images.unsplash.com/photo-1505253758473-96b7015fcd40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    image?? "https://images.unsplash.com/photo-1505253758473-96b7015fcd40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
                   ),
                 ),
               ),
@@ -58,7 +61,7 @@ class RecommendedCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Muffins With coca\ncream",
+                  title ?? "Muffins With coca\ncream",
                   style: gPrimaryFont.copyWith(
                       fontWeight: FontWeight.w700, fontSize: 18),
                 ),

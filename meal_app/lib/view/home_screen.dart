@@ -145,13 +145,23 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                ListView.builder(
-                  itemCount: 5,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return RecommendedCard();
-                  },
+                ValueListenableBuilder(
+                  valueListenable: categoriesData,
+                  builder: (context,item,_) {
+                    return ListView.builder(
+                      itemCount: item.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        item.shuffle();
+                        final meal = item[index];
+                        return RecommendedCard(
+                          image: meal.strCategoryThumb,
+                          title: meal.strCategory,
+                        );
+                      },
+                    );
+                  }
                 )
 
                 // SizedBox(height: 100,)
