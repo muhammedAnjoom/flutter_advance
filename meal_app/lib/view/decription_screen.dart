@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meal_app/view/core/font.dart';
 
-import 'widget/Ingedients_card.dart';
+// import 'widget/Ingedients_card.dart';
 import 'widget/emoji_card.dart';
 
 class DescriptionScreen extends StatelessWidget {
-  const DescriptionScreen({super.key});
+  const DescriptionScreen(
+      {super.key, this.backgroundImage, this.decription, this.title});
+
+  final String? backgroundImage;
+  final String? title;
+  final String? decription;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,8 @@ class DescriptionScreen extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Image.network(
-            "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+            backgroundImage ??
+                "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
             fit: BoxFit.cover,
           ),
           Align(
@@ -27,11 +33,17 @@ class DescriptionScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () => Navigator.of(context).pop(),
-                  child: SvgPicture.asset(
-                    "assets/icons/left-arrow.svg",
-                    width: 50,
-                    height: 50,
-                    color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircleAvatar(
+                      radius: 25,
+                      child: SvgPicture.asset(
+                        "assets/icons/left-arrow.svg",
+                        width: 50,
+                        height: 50,
+                        // color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -60,7 +72,7 @@ class DescriptionScreen extends StatelessWidget {
                           height: 40,
                         ),
                         Text(
-                          "Stuffed Chicken",
+                          title ?? "Stuffed Chicken",
                           style: gPrimaryFont.copyWith(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
@@ -95,20 +107,14 @@ class DescriptionScreen extends StatelessWidget {
                         SizedBox(
                           height: 15,
                         ),
-                        ListView.separated(
-                          controller: scrollController,
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Ingredients();
-                          },
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              height: 10,
-                            );
-                          },
-                          itemCount: 4,
+                        Text(
+                          decription ??
+                              "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times.[1] Beef is a source of high-quality protein and essential nutrients.[2]",
+                          style: gPrimaryFont.copyWith(
+                            fontSize: 18,
+                          ),
+                          maxLines: 6,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(
                           height: 20,

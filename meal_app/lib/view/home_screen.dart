@@ -108,7 +108,11 @@ class HomeScreen extends StatelessWidget {
                               onTap: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (ctx) => DescriptionScreen(),
+                                    builder: (ctx) => DescriptionScreen(
+                                      backgroundImage: data.strCategoryThumb,
+                                      title: data.strCategory,
+                                      decription: data.strCategoryDescription,
+                                    ),
                                   ),
                                 );
                               },
@@ -116,6 +120,7 @@ class HomeScreen extends StatelessWidget {
                                 image: data.strCategoryThumb!,
                                 title: data.strCategory!,
                                 decription: data.strCategoryDescription!,
+
                               ),
                             ),
                           );
