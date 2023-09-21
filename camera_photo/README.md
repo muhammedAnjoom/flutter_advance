@@ -8,7 +8,7 @@ use in acess camera and gallery.
 <table>
     <tr>
         <td><img src="assets/Screenshot1.png" width="500" /></td>
-        <td><img src="assets/Screenshot1.png" width="500" /></td>
+        <td><img src="assets/Screenshot2.png" width="500" /></td>
     </tr>
 </table>
 
