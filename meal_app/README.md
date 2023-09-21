@@ -1,16 +1,25 @@
 # meal_app
 
-A new Flutter project.
+I am happy to share with you my api project in flutter, this meal app.
+use in www.themealdb.com api.
 
-## Getting Started
+## ScreenShots
 
-This project is a starting point for a Flutter application.
+<table>
+    <tr>
+        <td><img src="assets/image/Screenshot1.png" width="500" /></td>
+        <td><img src="assets/image/Screenshot2.png" width="500" /></td>
+    </tr>
+    <tr>
+        <td><img src="assets/image/Screenshot3.png" width="500" /></td>
+        <td><img src="assets/image/Screenshot4.png" width="500" /></td>
+    </tr>
+</table>
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Building
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+-Install Flutter
+- `flutter pub get`
+- `flutter run`
+
