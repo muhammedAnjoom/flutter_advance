@@ -68,7 +68,69 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(flex:1,child: Container(),),
+            Expanded(
+              flex: 1,
+              child: SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                          itemCount: 5,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 20),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 20),
+                              height: 150,
+                              decoration: BoxDecoration(
+                                  color: Color(0xfffff4e4),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "our journey",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: Color(0xF47A4921),
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Container(
+                                        width: 30,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(),
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        child: Icon(Icons.check),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "we meet at 2018,yap..and we meet again in 2022",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          })
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
