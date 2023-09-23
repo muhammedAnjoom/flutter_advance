@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -79,50 +80,93 @@ class HomeScreen extends StatelessWidget {
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            return Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 15, horizontal: 20),
-                              margin: EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 20),
-                              height: 150,
-                              decoration: BoxDecoration(
-                                  color: Color(0xfffff4e4),
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
+                            // print(index);
+                            return Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Slidable(
+                                key: ValueKey('$index'),
+                                startActionPane: ActionPane(
+                                  // openThreshold: ,
+                                  motion: DrawerMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      onPressed: (value) {
+                                        print("editite $index");
+                                      },
+                                      icon: Icons.edit_square,
+                                      label: "Edite",
+                                      backgroundColor: Colors.green,
+                                      foregroundColor: Colors.white,
+                                      borderRadius: BorderRadius.circular(15),
+                                    )
+                                  ],
+                                ),
+                                endActionPane: ActionPane(
+                                  key: UniqueKey(),
+                                  // dragDismissible: false,
+                                  dismissible:
+                                      DismissiblePane(onDismissed: () {}),
+                                  motion: DrawerMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      borderRadius: BorderRadius.circular(15),
+                                      onPressed: (value) {},
+                                      icon: Icons.delete,
+                                      backgroundColor: Colors.red,
+                                      foregroundColor: Colors.white,
+                                      label: "Delete",
+                                    )
+                                  ],
+                                ),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 20),
+                                  // margin: EdgeInsets.symmetric(
+                                  //     vertical: 20, horizontal: 20),
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xfffff4e4),
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "our journey",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700,
+                                              color: Color(0xF47A4921),
+                                            ),
+                                          ),
+                                          Spacer(),
+                                          Container(
+                                            width: 30,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(),
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            child: Icon(Icons.check),
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
                                       Text(
-                                        "our journey",
+                                        "we meet at 2018,yap..and we meet again in 2022",
                                         style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700,
-                                          color: Color(0xF47A4921),
+                                          fontSize: 18,
                                         ),
                                       ),
-                                      Spacer(),
-                                      Container(
-                                        width: 30,
-                                        height: 30,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(),
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                        child: Icon(Icons.check),
-                                      )
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    "we meet at 2018,yap..and we meet again in 2022",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             );
                           })
