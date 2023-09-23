@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:todo_list/view/add_todo.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+   HomeScreen({super.key});
+
+  ValueNotifier<bool> checkTodo =ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -87,11 +90,19 @@ class HomeScreen extends StatelessWidget {
                                 key: ValueKey('$index'),
                                 startActionPane: ActionPane(
                                   // openThreshold: ,
+                                  dragDismissible: false,
                                   motion: DrawerMotion(),
                                   children: [
                                     SlidableAction(
                                       onPressed: (value) {
                                         print("editite $index");
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (ctx) => AddToDo(
+                                                type: ActionType.addTodo),
+                                          ),
+                                        );
                                       },
                                       icon: Icons.edit_square,
                                       label: "Edite",
@@ -144,14 +155,26 @@ class HomeScreen extends StatelessWidget {
                                             ),
                                           ),
                                           Spacer(),
-                                          Container(
-                                            width: 30,
-                                            height: 30,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(),
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                            child: Icon(Icons.check),
+                                          GestureDetector(
+                                            onTap: (){
+                                               checkTodo.value=!checkTodo.value;
+                                               checkTodo.notifyListeners();
+                                              //  print(checkTodo.value);
+                                            },
+                                            child: ValueListenableBuilder(
+                                              valueListenable: checkTodo,
+                                              builder: (context,value,_) {
+                                                return Container(
+                                                  width: 30,
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(),
+                                                      borderRadius:
+                                                          BorderRadius.circular(5)),
+                                                  child: value? Icon(Icons.check):null,
+                                                );
+                                              }
+                                            ),
                                           )
                                         ],
                                       ),

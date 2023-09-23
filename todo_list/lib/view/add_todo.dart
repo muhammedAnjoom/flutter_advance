@@ -6,7 +6,9 @@ enum ActionType {
 }
 
 class AddToDo extends StatelessWidget {
-  const AddToDo({super.key});
+  const AddToDo({super.key, required this.type});
+
+  final ActionType type;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +24,14 @@ class AddToDo extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                      onPressed: () {},
+                      onPressed: ()=>Navigator.of(context).pop(),
                       icon: const Icon(
                         Icons.arrow_back_sharp,
                         size: 28,
                       )),
                   TextButton(
                       onPressed: () {
-                        switch(ActionType){
+                        switch(type){
                           case ActionType.addTodo:
                           //  addNote
                             break;
