@@ -13,6 +13,7 @@ class AddToDo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xffFBF3E1),
       body: SafeArea(
         child: Container(
@@ -24,16 +25,16 @@ class AddToDo extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                      onPressed: ()=>Navigator.of(context).pop(),
+                      onPressed: () => Navigator.of(context).pop(),
                       icon: const Icon(
                         Icons.arrow_back_sharp,
                         size: 28,
                       )),
                   TextButton(
                       onPressed: () {
-                        switch(type){
+                        switch (type) {
                           case ActionType.addTodo:
-                          //  addNote
+                            //  addNote
                             break;
                           case ActionType.editTodo:
                             //  edittodo

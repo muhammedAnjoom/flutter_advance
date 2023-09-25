@@ -2,16 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_list/view/add_todo.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class HomeScreen extends StatelessWidget {
-   HomeScreen({super.key});
+  HomeScreen({super.key});
 
-  ValueNotifier<bool> checkTodo =ValueNotifier(false);
+  ValueNotifier<bool> checkTodo = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      bottomNavigationBar: CurvedNavigationBar(
+        height: 50,
+        // index: 2,
+        backgroundColor: Colors.transparent,
+        buttonBackgroundColor: Color(0xfffbe4b3),
+        color: Colors.grey.shade200.withOpacity(0.99),
+        onTap: (value) => Navigator.of(context).push(MaterialPageRoute(
+            builder: (ctx) => AddToDo(
+                  type: ActionType.addTodo,
+                ))),
+        items: [
+          IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset(
+              "assets/icons/edit.svg",
+              fit: BoxFit.scaleDown,
+              width: 30,
+              height: 30,
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -156,25 +179,28 @@ class HomeScreen extends StatelessWidget {
                                           ),
                                           Spacer(),
                                           GestureDetector(
-                                            onTap: (){
-                                               checkTodo.value=!checkTodo.value;
-                                               checkTodo.notifyListeners();
+                                            onTap: () {
+                                              checkTodo.value =
+                                                  !checkTodo.value;
+                                              checkTodo.notifyListeners();
                                               //  print(checkTodo.value);
                                             },
                                             child: ValueListenableBuilder(
-                                              valueListenable: checkTodo,
-                                              builder: (context,value,_) {
-                                                return Container(
-                                                  width: 30,
-                                                  height: 30,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(),
-                                                      borderRadius:
-                                                          BorderRadius.circular(5)),
-                                                  child: value? Icon(Icons.check):null,
-                                                );
-                                              }
-                                            ),
+                                                valueListenable: checkTodo,
+                                                builder: (context, value, _) {
+                                                  return Container(
+                                                    width: 30,
+                                                    height: 30,
+                                                    decoration: BoxDecoration(
+                                                        border: Border.all(),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5)),
+                                                    child: value
+                                                        ? Icon(Icons.check)
+                                                        : null,
+                                                  );
+                                                }),
                                           )
                                         ],
                                       ),
