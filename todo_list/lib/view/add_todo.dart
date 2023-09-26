@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/model/add_todo_model.dart';
 import 'package:todo_list/services/data.dart';
+import 'package:todo_list/view/home_screen.dart';
 
 enum ActionType {
   addTodo,
@@ -35,20 +36,20 @@ class AddToDo extends StatelessWidget {
                         size: 28,
                       )),
                   TextButton(
-                      onPressed: () async{
+                      onPressed: () async {
                         switch (type) {
                           case ActionType.addTodo:
                             //  addNote
-                             final title = titleController.text;
-                             final description = decorationController.text;
-                             final data = AddTodoModel(
-                              title: title,
-                              description: description,
-                              isCompleted: false
-                             );
-                             await TodoDataFunction().addTodoData(data);
-                             print("is added");
-                             Navigator.of(context).pop();
+                            final title = titleController.text;
+                            final description = decorationController.text;
+                            final data = AddTodoModel(
+                                title: title,
+                                description: description,
+                                isCompleted: false);
+                            await TodoDataFunction().addTodoData(data);
+                            print("is added");
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => HomeScreen()));
                             break;
                           case ActionType.editTodo:
                             //  edittodo
@@ -67,11 +68,11 @@ class AddToDo extends StatelessWidget {
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child:  Column(
+                  child: Column(
                     children: [
                       TextField(
                         controller: titleController,
-                        style:const  TextStyle(
+                        style: const TextStyle(
                             fontSize: 30,
                             color: Color(0xff8B6521),
                             fontWeight: FontWeight.w800),
@@ -86,7 +87,7 @@ class AddToDo extends StatelessWidget {
                           minLines: null,
                           maxLines: null,
                           expands: true,
-                          style:const TextStyle(fontSize: 18),
+                          style: const TextStyle(fontSize: 18),
                           decoration:
                               InputDecoration(hintText: "Enter decripiton"),
                         ),

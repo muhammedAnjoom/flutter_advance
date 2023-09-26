@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:todo_list/services/data.dart';
 import 'package:todo_list/view/add_todo.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   ValueNotifier<bool> checkTodo = ValueNotifier(false);
+
+  final todoFunction = TodoDataFunction();
+
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_)async{
+      await todoFunction.getTodoData();
+    });
     return Scaffold(
       resizeToAvoidBottomInset: false,
       bottomNavigationBar: CurvedNavigationBar(
@@ -101,94 +113,98 @@ class HomeScreen extends StatelessWidget {
                 child: Container(
                   child: Column(
                     children: [
-                      ListView.builder(
-                          itemCount: 5,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            // print(index);
-                            return Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Slidable(
-                                key: ValueKey('$index'),
-                                startActionPane: ActionPane(
-                                  // openThreshold: ,
-                                  dragDismissible: false,
-                                  motion: DrawerMotion(),
-                                  children: [
-                                    SlidableAction(
-                                      onPressed: (value) {
-                                        print("editite $index");
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (ctx) => AddToDo(
-                                                type: ActionType.addTodo),
-                                          ),
-                                        );
-                                      },
-                                      icon: Icons.edit_square,
-                                      label: "Edite",
-                                      backgroundColor: Colors.green,
-                                      foregroundColor: Colors.white,
-                                      borderRadius: BorderRadius.circular(15),
-                                    )
-                                  ],
-                                ),
-                                endActionPane: ActionPane(
-                                  key: UniqueKey(),
-                                  // dragDismissible: false,
-                                  dismissible:
-                                      DismissiblePane(onDismissed: () {}),
-                                  motion: DrawerMotion(),
-                                  children: [
-                                    SlidableAction(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 10),
-                                      borderRadius: BorderRadius.circular(15),
-                                      onPressed: (value) {},
-                                      icon: Icons.delete,
-                                      backgroundColor: Colors.red,
-                                      foregroundColor: Colors.white,
-                                      label: "Delete",
-                                    )
-                                  ],
-                                ),
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 15, horizontal: 20),
-                                  // margin: EdgeInsets.symmetric(
-                                  //     vertical: 20, horizontal: 20),
-                                  height: 150,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xfffff4e4),
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
+                      ValueListenableBuilder(
+                          valueListenable: todoItemNotifier,
+                          builder: (context, item, _) {
+                            return ListView.builder(
+                                itemCount: item.length,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  // print(index);
+                                  final todo = item[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Slidable(
+                                      key: ValueKey('$index'),
+                                      startActionPane: ActionPane(
+                                        // openThreshold: ,
+                                        dragDismissible: false,
+                                        motion: DrawerMotion(),
                                         children: [
-                                          Text(
-                                            "our journey",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w700,
-                                              color: Color(0xF47A4921),
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          GestureDetector(
-                                            onTap: () {
-                                              checkTodo.value =
-                                                  !checkTodo.value;
-                                              checkTodo.notifyListeners();
-                                              //  print(checkTodo.value);
+                                          SlidableAction(
+                                            onPressed: (value) {
+                                              print("editite");
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (ctx) => AddToDo(
+                                                      type: ActionType.addTodo),
+                                                ),
+                                              );
                                             },
-                                            child: ValueListenableBuilder(
-                                                valueListenable: checkTodo,
-                                                builder: (context, value, _) {
-                                                  return Container(
+                                            icon: Icons.edit_square,
+                                            label: "Edite",
+                                            backgroundColor: Colors.green,
+                                            foregroundColor: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          )
+                                        ],
+                                      ),
+                                      endActionPane: ActionPane(
+                                        key: UniqueKey(),
+                                        // dragDismissible: false,
+                                        dismissible:
+                                            DismissiblePane(onDismissed: () {}),
+                                        motion: DrawerMotion(),
+                                        children: [
+                                          SlidableAction(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            onPressed: (value) {},
+                                            icon: Icons.delete,
+                                            backgroundColor: Colors.red,
+                                            foregroundColor: Colors.white,
+                                            label: "Delete",
+                                          )
+                                        ],
+                                      ),
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 15, horizontal: 20),
+                                        // margin: EdgeInsets.symmetric(
+                                        //     vertical: 20, horizontal: 20),
+                                        height: 150,
+                                        decoration: BoxDecoration(
+                                            color: Color(0xfffff4e4),
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  todo.title ?? "our journey",
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Color(0xF47A4921),
+                                                  ),
+                                                ),
+                                                Spacer(),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    // checkTodo.value =
+                                                    //     !checkTodo.value;
+                                                    // checkTodo.notifyListeners();
+                                                    //  print(checkTodo.value);
+                                                  },
+                                                  child: Container(
                                                     width: 30,
                                                     height: 30,
                                                     decoration: BoxDecoration(
@@ -196,28 +212,29 @@ class HomeScreen extends StatelessWidget {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(5)),
-                                                    child: value
+                                                    child: todo.isCompleted!
                                                         ? Icon(Icons.check)
                                                         : null,
-                                                  );
-                                                }),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "we meet at 2018,yap..and we meet again in 2022",
-                                        style: TextStyle(
-                                          fontSize: 18,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              todo.description ??
+                                                  "we meet at 2018,yap..and we meet again in 2022",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
+                                    ),
+                                  );
+                                });
                           })
                     ],
                   ),
