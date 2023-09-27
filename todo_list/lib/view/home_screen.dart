@@ -17,35 +17,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final todoFunction = TodoDataFunction();
 
-
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_)async{
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       await todoFunction.getTodoData();
     });
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      bottomNavigationBar: CurvedNavigationBar(
-        height: 50,
-        // index: 2,
-        backgroundColor: Colors.transparent,
-        buttonBackgroundColor: Color(0xfffbe4b3),
-        color: Colors.grey.shade200.withOpacity(0.99),
-        onTap: (value) => Navigator.of(context).push(MaterialPageRoute(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xfffbe4b3),
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => AddToDo(
                   type: ActionType.addTodo,
-                ))),
-        items: [
-          IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(
-              "assets/icons/edit.svg",
-              fit: BoxFit.scaleDown,
-              width: 30,
-              height: 30,
-            ),
-          ),
-        ],
+                )));
+        },
+        child: SvgPicture.asset(
+          "assets/icons/edit.svg",
+          fit: BoxFit.scaleDown,
+          width: 30,
+          height: 30,
+        ),
       ),
       body: SafeArea(
         child: Column(
@@ -121,15 +113,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
-                                  // print(index);
+                                  print(index);
                                   final todo = item[index];
+                                  print(todo.sId);
                                   return Padding(
                                     padding: const EdgeInsets.all(20),
                                     child: Slidable(
-                                      key: ValueKey('$index'),
+                                      key: Key("$index"),
                                       startActionPane: ActionPane(
                                         // openThreshold: ,
-                                        dragDismissible: false,
                                         motion: DrawerMotion(),
                                         children: [
                                           SlidableAction(
@@ -153,10 +145,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ],
                                       ),
                                       endActionPane: ActionPane(
-                                        key: UniqueKey(),
+                                        // key: ValueKey("$index"),
                                         // dragDismissible: false,
-                                        dismissible:
-                                            DismissiblePane(onDismissed: () {}),
+                                        dismissible: DismissiblePane(
+                                          key: Key("$index"),
+                                          onDismissed: (){
+                                            // print(value.index);
+                                            todoFunction.deleteTodoData(todo.sId!);
+                                            todoItemNotifier.value.removeAt(index);
+                                            todoItemNotifier.notifyListeners();
+                                          },
+                                        ),
                                         motion: DrawerMotion(),
                                         children: [
                                           SlidableAction(
@@ -164,7 +163,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 vertical: 10),
                                             borderRadius:
                                                 BorderRadius.circular(15),
-                                            onPressed: (value) {},
+                                            onPressed: (value) {
+                                              todoFunction
+                                                  .deleteTodoData(todo.sId!);
+                                              todoFunction.getTodoData();
+                                            },
                                             icon: Icons.delete,
                                             backgroundColor: Colors.red,
                                             foregroundColor: Colors.white,

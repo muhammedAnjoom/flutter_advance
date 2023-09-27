@@ -4,12 +4,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_list/model/add_todo_model.dart';
 import 'package:todo_list/model/get_todo_model.dart';
+import 'package:todo_list/model/todo_data_model.dart';
 
 abstract class TodoData{
   Future<void> addTodoData(AddTodoModel value);
   Future<void> getTodoData();
+  Future<void> deleteTodoData(String id);
 }
- ValueNotifier<List<AddTodoModel>> todoItemNotifier = ValueNotifier([]);
+ ValueNotifier<List<TodoDataModel>> todoItemNotifier = ValueNotifier([]);
 class TodoDataFunction extends TodoData{
 
   final dio = Dio();
@@ -21,6 +23,7 @@ class TodoDataFunction extends TodoData{
       "https://api.nstack.in/v1/todos",
       data: value.toJson()
     );
+    await getTodoData();
   }
   
   @override
@@ -35,6 +38,14 @@ class TodoDataFunction extends TodoData{
     todoItemNotifier.notifyListeners();
     print(todoItemNotifier.value.length);
     // return todoItemNotifier.value;
+  }
+  
+  @override
+  Future<void> deleteTodoData(String id) async{
+    final result = await dio.delete("https://api.nstack.in/v1/todos/$id");
+    print("deleted sucessfull");
+    await getTodoData();
+
   }
 
 
