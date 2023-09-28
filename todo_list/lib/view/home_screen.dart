@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   return Padding(
                                     padding: const EdgeInsets.all(20),
                                     child: Slidable(
-                                      key: Key("$index"),
+                                      key: Key("${item.length-1}"),
                                       startActionPane: ActionPane(
                                         // openThreshold: ,
                                         motion: DrawerMotion(),
