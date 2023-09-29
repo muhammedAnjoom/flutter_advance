@@ -19,6 +19,7 @@ class AddToDo extends StatelessWidget {
 
   final String? id;
   final TodoDataModel? todoData;
+  bool completeTask = false;
 
   final ActionType type;
   final TextEditingController titleController = TextEditingController();
@@ -33,6 +34,7 @@ class AddToDo extends StatelessWidget {
       titleController.text = todoData!.title ?? "no title";
       print(titleController.text);
       decorationController.text = todoData!.description ?? "no decripiton";
+      completeTask = todoData!.isCompleted!;
     }
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -62,7 +64,7 @@ class AddToDo extends StatelessWidget {
                             final data = AddTodoModel(
                                 title: title,
                                 description: description,
-                                isCompleted: false);
+                                isCompleted: completeTask);
                             await TodoDataFunction().addTodoData(data);
                             print("is added");
                             Navigator.of(context).push(MaterialPageRoute(
@@ -72,9 +74,10 @@ class AddToDo extends StatelessWidget {
                             final title = titleController.text;
                             final description = decorationController.text;
                             final data = AddTodoModel(
-                                title: title,
-                                description: description,
-                                isCompleted: false);
+                              title: title,
+                              description: description,
+                              isCompleted: completeTask,
+                            );
                             await TodoDataFunction()
                                 .updateTodoData(data, todoData!.sId!);
                             print("is edited");

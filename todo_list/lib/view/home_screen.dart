@@ -116,6 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemBuilder: (context, index) {
                                   print(index);
                                   final todo = item[index];
+                                  //  item.sort((a,b){
+                                  //   if(b.isCompleted!){
+                                  //     return 1;
+                                  //   }
+                                  //   return -1;
+                                  // });
                                   print(todo.sId);
                                   return Padding(
                                     padding: const EdgeInsets.all(20),

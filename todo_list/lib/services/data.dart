@@ -36,6 +36,14 @@ class TodoDataFunction extends TodoData {
     todoItemNotifier.value.clear();
     final dataToJson = GetTodoModel.fromJson(data as Map<String, dynamic>);
     todoItemNotifier.value.addAll(dataToJson.items!);
+    todoItemNotifier.value=todoItemNotifier.value.reversed.toList();
+    todoItemNotifier.value.sort((a,b){
+      if(a.isCompleted!){
+        return 1;
+      }else{
+        return -1;
+      }
+    });
     todoItemNotifier.notifyListeners();
     print(todoItemNotifier.value.length);
     // return todoItemNotifier.value;
