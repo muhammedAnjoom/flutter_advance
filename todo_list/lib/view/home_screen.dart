@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:todo_list/model/add_todo_model.dart';
 import 'package:todo_list/services/data.dart';
 import 'package:todo_list/view/add_todo.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -28,9 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Color(0xfffbe4b3),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (ctx) => AddToDo(
-                  type: ActionType.addTodo,
-                )));
+              builder: (ctx) => AddToDo(
+                    type: ActionType.addTodo,
+                  )));
         },
         child: SvgPicture.asset(
           "assets/icons/edit.svg",
@@ -119,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   return Padding(
                                     padding: const EdgeInsets.all(20),
                                     child: Slidable(
-                                      key: Key("${item.length-1}"),
+                                      key: Key("${item.length - 1}"),
                                       startActionPane: ActionPane(
                                         // openThreshold: ,
                                         motion: DrawerMotion(),
@@ -149,10 +150,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         // dragDismissible: false,
                                         dismissible: DismissiblePane(
                                           key: Key("$index"),
-                                          onDismissed: (){
+                                          onDismissed: () {
                                             // print(value.index);
-                                            todoFunction.deleteTodoData(todo.sId!);
-                                            todoItemNotifier.value.removeAt(index);
+                                            todoFunction
+                                                .deleteTodoData(todo.sId!);
+                                            todoItemNotifier.value
+                                                .removeAt(index);
                                             todoItemNotifier.notifyListeners();
                                           },
                                         ),
@@ -206,6 +209,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     //     !checkTodo.value;
                                                     // checkTodo.notifyListeners();
                                                     //  print(checkTodo.value);
+                                                    setState(() {
+                                                      todo.isCompleted =
+                                                          !todo.isCompleted!;
+                                                    });
+
+                                                    final todoData =
+                                                        AddTodoModel(
+                                                      title: todo.title,
+                                                      description:
+                                                          todo.description,
+                                                      isCompleted:
+                                                          todo.isCompleted,
+                                                    );
+                                                    todoFunction
+                                                        .completeTaskTodoData(
+                                                            todoData,
+                                                            todo.sId!);
                                                   },
                                                   child: Container(
                                                     width: 30,
