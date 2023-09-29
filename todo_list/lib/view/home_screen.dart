@@ -5,18 +5,29 @@ import 'package:todo_list/model/add_todo_model.dart';
 import 'package:todo_list/services/data.dart';
 import 'package:todo_list/view/add_todo.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:todo_list/view/widgets/list_todo.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+// check the tasks
   ValueNotifier<bool> checkTodo = ValueNotifier(false);
 
   final todoFunction = TodoDataFunction();
+
+// search todo items
+  void searchTod(String query) {
+    final suggestion = todoItemNotifier.value.where((todo) {
+      final todoTitle = todo.title!.toLowerCase();
+      final input = query.toLowerCase();
+      return todoTitle.contains(input);
+    }).toList();
+    if (query.isNotEmpty) {
+      todoItemNotifier.value = suggestion;
+    } else {
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xfffbe4b3),
+        backgroundColor: const Color(0xfffbe4b3),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (ctx) => AddToDo(
@@ -46,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               width: double.infinity,
               height: 280,
-              decoration: BoxDecoration(color: Color(0xffffe4e4)),
+              decoration: const BoxDecoration(color: Color(0xffffe4e4)),
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -57,26 +68,34 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 60,
                       height: 60,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Text(
+                    const Text(
                       "Shared note",
                       style: TextStyle(fontSize: 15, color: Colors.black54),
                     ),
-                    Text(
+                    const Text(
                       "I & You Space",
                       style: TextStyle(
                         fontSize: 34,
                         color: Color(0xff7a2c21),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     TextField(
-                      // keyboardAppearance: ,
-                      style: TextStyle(fontSize: 20),
+                      onChanged: (value) {
+                        // check the query is empty
+                        if (value.isEmpty) {
+                          todoFunction.getTodoData();
+                          return;
+                        } else {
+                          searchTod(value);
+                        }
+                      },
+                      style: const TextStyle(fontSize: 20),
                       decoration: InputDecoration(
                           filled: true,
                           focusColor: Colors.white,
@@ -102,176 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Expanded(
               flex: 1,
-              child: SingleChildScrollView(
-                child: Container(
-                  child: Column(
-                    children: [
-                      ValueListenableBuilder(
-                          valueListenable: todoItemNotifier,
-                          builder: (context, item, _) {
-                            return ListView.builder(
-                                itemCount: item.length,
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  print(index);
-                                  final todo = item[index];
-                                  //  item.sort((a,b){
-                                  //   if(b.isCompleted!){
-                                  //     return 1;
-                                  //   }
-                                  //   return -1;
-                                  // });
-                                  print(todo.sId);
-                                  return Padding(
-                                    padding: const EdgeInsets.all(20),
-                                    child: Slidable(
-                                      key: Key("${item.length - 1}"),
-                                      startActionPane: ActionPane(
-                                        // openThreshold: ,
-                                        motion: DrawerMotion(),
-                                        children: [
-                                          SlidableAction(
-                                            onPressed: (value) {
-                                              print("editite");
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (ctx) => AddToDo(
-                                                    type: ActionType.editTodo,
-                                                    id: todo.sId,
-                                                    todoData: todo,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            icon: Icons.edit_square,
-                                            label: "Edite",
-                                            backgroundColor: Colors.green,
-                                            foregroundColor: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                          )
-                                        ],
-                                      ),
-                                      endActionPane: ActionPane(
-                                        // key: ValueKey("$index"),
-                                        // dragDismissible: false,
-                                        dismissible: DismissiblePane(
-                                          key: Key("$index"),
-                                          onDismissed: () {
-                                            // print(value.index);
-                                            todoFunction
-                                                .deleteTodoData(todo.sId!);
-                                            todoItemNotifier.value
-                                                .removeAt(index);
-                                            todoItemNotifier.notifyListeners();
-                                          },
-                                        ),
-                                        motion: DrawerMotion(),
-                                        children: [
-                                          SlidableAction(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 10),
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            onPressed: (value) {
-                                              todoFunction
-                                                  .deleteTodoData(todo.sId!);
-                                              todoFunction.getTodoData();
-                                            },
-                                            icon: Icons.delete,
-                                            backgroundColor: Colors.red,
-                                            foregroundColor: Colors.white,
-                                            label: "Delete",
-                                          )
-                                        ],
-                                      ),
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 15, horizontal: 20),
-                                        // margin: EdgeInsets.symmetric(
-                                        //     vertical: 20, horizontal: 20),
-                                        height: 150,
-                                        decoration: BoxDecoration(
-                                            color: Color(0xfffff4e4),
-                                            borderRadius:
-                                                BorderRadius.circular(15)),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  todo.title ?? "our journey",
-                                                  style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: Color(0xF47A4921),
-                                                  ),
-                                                ),
-                                                Spacer(),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    // checkTodo.value =
-                                                    //     !checkTodo.value;
-                                                    // checkTodo.notifyListeners();
-                                                    //  print(checkTodo.value);
-                                                    setState(() {
-                                                      todo.isCompleted =
-                                                          !todo.isCompleted!;
-                                                    });
-
-                                                    final todoData =
-                                                        AddTodoModel(
-                                                      title: todo.title,
-                                                      description:
-                                                          todo.description,
-                                                      isCompleted:
-                                                          todo.isCompleted,
-                                                    );
-                                                    todoFunction
-                                                        .completeTaskTodoData(
-                                                            todoData,
-                                                            todo.sId!);
-                                                  },
-                                                  child: Container(
-                                                    width: 30,
-                                                    height: 30,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5)),
-                                                    child: todo.isCompleted!
-                                                        ? Icon(Icons.check)
-                                                        : null,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              todo.description ??
-                                                  "we meet at 2018,yap..and we meet again in 2022",
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                });
-                          })
-                    ],
-                  ),
-                ),
-              ),
+              child: ListTodoCard(),
             ),
           ],
         ),
@@ -279,3 +129,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
