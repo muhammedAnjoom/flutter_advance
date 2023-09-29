@@ -132,7 +132,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (ctx) => AddToDo(
-                                                      type: ActionType.addTodo),
+                                                    type: ActionType.editTodo,
+                                                    id: todo.sId,
+                                                    todoData: todo,
+                                                  ),
                                                 ),
                                               );
                                             },

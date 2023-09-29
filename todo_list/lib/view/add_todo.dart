@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/model/add_todo_model.dart';
+import 'package:todo_list/model/todo_data_model.dart';
 import 'package:todo_list/services/data.dart';
 import 'package:todo_list/view/home_screen.dart';
 
@@ -9,7 +10,15 @@ enum ActionType {
 }
 
 class AddToDo extends StatelessWidget {
-  AddToDo({super.key, required this.type});
+  AddToDo({
+    super.key,
+    required this.type,
+    this.id,
+    this.todoData,
+  });
+
+  final String? id;
+  final TodoDataModel? todoData;
 
   final ActionType type;
   final TextEditingController titleController = TextEditingController();
@@ -17,6 +26,14 @@ class AddToDo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (type == ActionType.editTodo) {
+      if (id == null) {
+        Navigator.of(context).pop();
+      }
+      titleController.text = todoData!.title ?? "no title";
+      print(titleController.text);
+      decorationController.text = todoData!.description ?? "no decripiton";
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xffFBF3E1),
@@ -52,7 +69,18 @@ class AddToDo extends StatelessWidget {
                                 builder: (ctx) => HomeScreen()));
                             break;
                           case ActionType.editTodo:
-                            //  edittodo
+                            final title = titleController.text;
+                            final description = decorationController.text;
+                            final data = AddTodoModel(
+                                title: title,
+                                description: description,
+                                isCompleted: false);
+                            await TodoDataFunction()
+                                .updateTodoData(data, todoData!.sId!);
+                            print("is edited");
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => HomeScreen()));
+
                             break;
                         }
                       },

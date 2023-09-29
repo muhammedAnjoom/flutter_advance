@@ -11,6 +11,7 @@ abstract class TodoData {
   Future<void> getTodoData();
   Future<void> deleteTodoData(String id);
   Future<void> completeTaskTodoData(AddTodoModel value, String id);
+  Future<void> updateTodoData(AddTodoModel value, String id);
 }
 
 ValueNotifier<List<TodoDataModel>> todoItemNotifier = ValueNotifier([]);
@@ -49,6 +50,15 @@ class TodoDataFunction extends TodoData {
 
   @override
   Future<void> completeTaskTodoData(AddTodoModel value, String id) async {
+    final result = await dio.put(
+      "https://api.nstack.in/v1/todos/$id",
+      data: value.toJson(),
+    );
+    await getTodoData();
+  }
+
+  @override
+  Future<void> updateTodoData(AddTodoModel value, String id) async {
     final result = await dio.put(
       "https://api.nstack.in/v1/todos/$id",
       data: value.toJson(),
