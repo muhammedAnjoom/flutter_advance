@@ -105,7 +105,7 @@ class _ListTodoCardState extends State<ListTodoCard> {
                                   Row(
                                     children: [
                                       Text(
-                                        todo.title ?? "our journey",
+                                        todo.title ?? "no title",
                                         style: TextStyle(
                                           decoration: todo.isCompleted!
                                               ? TextDecoration.lineThrough
@@ -152,7 +152,7 @@ class _ListTodoCardState extends State<ListTodoCard> {
                                   ),
                                   Text(
                                     todo.description ??
-                                        "we meet at 2018,yap..and we meet again in 2022",
+                                        "no description",
                                     style: const TextStyle(
                                       fontSize: 18,
                                     ),

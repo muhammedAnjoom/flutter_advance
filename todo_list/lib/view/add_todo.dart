@@ -27,6 +27,7 @@ class AddToDo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // check edit todo or add todo
     if (type == ActionType.editTodo) {
       if (id == null) {
         Navigator.of(context).pop();
@@ -38,7 +39,7 @@ class AddToDo extends StatelessWidget {
     }
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xffFBF3E1),
+      backgroundColor: const Color(0xffFBF3E1),
       body: SafeArea(
         child: Container(
           width: double.infinity,
@@ -59,31 +60,10 @@ class AddToDo extends StatelessWidget {
                         switch (type) {
                           case ActionType.addTodo:
                             //  addNote
-                            final title = titleController.text;
-                            final description = decorationController.text;
-                            final data = AddTodoModel(
-                                title: title,
-                                description: description,
-                                isCompleted: completeTask);
-                            await TodoDataFunction().addTodoData(data);
-                            print("is added");
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => HomeScreen()));
+                            addTodo(context);
                             break;
                           case ActionType.editTodo:
-                            final title = titleController.text;
-                            final description = decorationController.text;
-                            final data = AddTodoModel(
-                              title: title,
-                              description: description,
-                              isCompleted: completeTask,
-                            );
-                            await TodoDataFunction()
-                                .updateTodoData(data, todoData!.sId!);
-                            print("is edited");
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => HomeScreen()));
-
+                            editTodo(context);
                             break;
                         }
                       },
@@ -107,7 +87,7 @@ class AddToDo extends StatelessWidget {
                             fontSize: 30,
                             color: Color(0xff8B6521),
                             fontWeight: FontWeight.w800),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintStyle: TextStyle(fontWeight: FontWeight.normal),
                             hintText: "Enter Title"),
@@ -120,7 +100,7 @@ class AddToDo extends StatelessWidget {
                           expands: true,
                           style: const TextStyle(fontSize: 18),
                           decoration:
-                              InputDecoration(hintText: "Enter decripiton"),
+                              const InputDecoration(hintText: "Enter decripiton"),
                         ),
                       )
                     ],
@@ -130,6 +110,37 @@ class AddToDo extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void addTodo(BuildContext ctx) async {
+    final title = titleController.text;
+    final description = decorationController.text;
+    final data = AddTodoModel(
+        title: title, description: description, isCompleted: completeTask);
+    await TodoDataFunction().addTodoData(data);
+    print("is added");
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (c) => HomeScreen(),
+      ),
+    );
+  }
+
+  void editTodo(BuildContext ctx) async {
+    final title = titleController.text;
+    final description = decorationController.text;
+    final data = AddTodoModel(
+      title: title,
+      description: description,
+      isCompleted: completeTask,
+    );
+    await TodoDataFunction().updateTodoData(data, todoData!.sId!);
+    print("is edited");
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (c) => HomeScreen(),
       ),
     );
   }
