@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_project/data/app_execeptions.dart';
+import 'package:getx_project/res/assets/images_assets.dart';
+import 'package:getx_project/res/colors/app_colors.dart';
+import 'package:getx_project/res/components/round_button.dart';
 import 'package:getx_project/res/routes/routes_name.dart';
 import 'package:getx_project/utils/utils.dart';
 
@@ -16,9 +19,29 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        Utils.toastCenterMessage('hello world');
-      }),
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 600,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  ImageAssets.SplashScreenImage,
+                ),
+              ),
+            ),
+            // child:
+          ),
+          RoundButton(
+            onPressed: () {},
+            loading: true,
+            title: 'Signup',
+            textColor: AppColor.whitColor,
+            width: 120,
+          ),
+        ],
+      ),
     );
   }
 }
