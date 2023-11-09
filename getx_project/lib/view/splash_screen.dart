@@ -7,6 +7,7 @@ import 'package:getx_project/res/colors/app_colors.dart';
 import 'package:getx_project/res/components/round_button.dart';
 import 'package:getx_project/res/routes/routes_name.dart';
 import 'package:getx_project/utils/utils.dart';
+import 'package:getx_project/view_models/services/splash_services.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,6 +17,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+ 
+ SplashServices splashServices = SplashServices();
+
+ @override
+  void initState() {
+    splashServices.isLogin();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,13 +42,6 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             // child:
-          ),
-          RoundButton(
-            onPressed: () {},
-            loading: true,
-            title: 'Signup',
-            textColor: AppColor.whitColor,
-            width: 120,
           ),
         ],
       ),
