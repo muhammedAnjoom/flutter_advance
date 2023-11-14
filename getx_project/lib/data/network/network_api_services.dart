@@ -20,7 +20,7 @@ class NetworkApiServices extends BaseApiServices {
               seconds: 10,
             ),
           );
-      returnResponse(responseJson);
+      responseJson = returnResponse(response);
     } on SocketException {
       throw InternetException('');
     } on RequestTimeOut {
@@ -35,7 +35,8 @@ class NetworkApiServices extends BaseApiServices {
         dynamic responseJson = jsonDecode(response.body);
         return responseJson;
       case 400:
-        throw InvaildUrl;
+        dynamic responseJson = jsonDecode(response.body);
+        return responseJson;
       default:
         throw FetchDataException('Error while communication with server' +
             response.statusCode.toString());
@@ -57,7 +58,7 @@ class NetworkApiServices extends BaseApiServices {
                   seconds: 10,
                 ),
               );
-      returnResponse(responseJson);
+      responseJson = returnResponse(response);
     } on SocketException {
       throw InternetException('');
     } on RequestTimeOut {

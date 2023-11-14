@@ -26,7 +26,7 @@ class Utils {
     );
   }
 
-  static snackBar(String message, String title) {
+  static snackBar(String title, String message) {
     Get.snackbar(
       title,
       message,

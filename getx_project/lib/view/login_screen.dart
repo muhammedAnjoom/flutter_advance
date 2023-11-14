@@ -61,14 +61,7 @@ class LoginScreen extends StatelessWidget {
                     if (value!.isEmpty) {
                       Utils.snackBar("Password", "Enter password");
                     }
-                  },
-                  onFieldSubmitted: (value) {
-                    if (value.isEmpty) {
-                    //   Utils.fieldFocusChange(
-                    //       context,
-                    //       loginController.emailFocusNode.value,
-                    //       loginController.passwrodFocusNode.value);
-                    // }
+                    return null;
                   },
                   obscureText: true,
                   decoration: InputDecoration(
@@ -80,14 +73,17 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                RoundButton(
-                  title: "Login",
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {}
-                  },
-                  width: 150,
-                  textColor: AppColor.whitColor,
-                )
+                Obx(() => RoundButton(
+                      title: "Login",
+                      loading: loginController.loading.value,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          loginController.loginApi();
+                        }
+                      },
+                      width: 150,
+                      textColor: AppColor.whitColor,
+                    ))
               ],
             ),
           ),
