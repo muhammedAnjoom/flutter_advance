@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:getx_project/res/routes/routes_name.dart';
+import 'package:getx_project/view/home_screen.dart';
 import 'package:getx_project/view/login_screen.dart';
 import 'package:getx_project/view/splash_screen.dart';
 
@@ -14,6 +15,11 @@ class AppRoute {
         GetPage(
           name: RouteName.loginScreen,
           page: () => LoginScreen(),
+          transition: Transition.leftToRightWithFade,
+        ),
+        GetPage(
+          name: RouteName.homeScreen,
+          page: () => HomeScreen(),
           transition: Transition.leftToRightWithFade,
         )
       ];

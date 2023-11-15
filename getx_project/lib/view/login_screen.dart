@@ -5,7 +5,7 @@ import 'package:getx_project/res/components/general_expection.dart';
 import 'package:getx_project/res/components/internet_expection_widget.dart';
 import 'package:getx_project/res/components/round_button.dart';
 import 'package:getx_project/utils/utils.dart';
-import 'package:getx_project/view_models/controller/login_view_model.dart';
+import 'package:getx_project/view_models/controller/login/login_view_model.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});

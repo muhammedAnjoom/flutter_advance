@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:getx_project/models/login/user_model.dart';
 import 'package:getx_project/repository/login_repository/login_respository.dart';
+import 'package:getx_project/res/routes/routes_name.dart';
 import 'package:getx_project/utils/utils.dart';
+import 'package:getx_project/view_models/controller/user_preferences/user_preference_view_model.dart';
 
 class LoginViewModel extends GetxController {
   final _api = LoginRepository();
@@ -10,6 +14,7 @@ class LoginViewModel extends GetxController {
 
   final emailFocusNode = FocusNode().obs;
   final passwrodFocusNode = FocusNode().obs;
+  final userPerfences = UserPrefences();
   RxBool loading = false.obs;
 
   void loginApi() {
@@ -24,6 +29,14 @@ class LoginViewModel extends GetxController {
       if (value['error'] == 'user not found') {
         Utils.snackBar('Login', value['error']);
       } else {
+        UserModel userModel = UserModel(
+          token: value['token'],
+          isLogin: true,
+        );
+        userPerfences.saveUser(userModel).then((value) {
+          Get.toNamed(RouteName.homeScreen);
+        }).onError((error, stackTrace) {});
+
         Utils.snackBar('Login', "Login succesfully");
       }
     }).onError((error, stackTrace) {
