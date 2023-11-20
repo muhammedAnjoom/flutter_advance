@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:getx_project/res/routes/routes_name.dart';
+import 'package:getx_project/view_models/controller/home/home_view_model.dart';
 import 'package:getx_project/view_models/controller/user_preferences/user_preference_view_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,6 +13,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
+ final homeController = Get.put(HomeController());
+
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    homeController.userListApi();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
