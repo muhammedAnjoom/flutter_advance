@@ -15,26 +15,26 @@ class InternetExpectionWidget extends StatefulWidget {
 class _InternetExpectionWidgetState extends State<InternetExpectionWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.cloud_off,
             color: AppColor.redColor,
             size: 50,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Text(
+          const Text(
             AppContent.interntMessage,
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           ElevatedButton(
             onPressed: widget.onPressed,
-            child: Text("Retry"),
+            child: const Text("Retry"),
           )
         ],
       ),

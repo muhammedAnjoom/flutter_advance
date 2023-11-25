@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:get/get_connect/connect.dart';
 import 'package:getx_project/data/app_execeptions.dart';
 import 'package:getx_project/data/network/base_api_services.dart';
 import 'package:http/http.dart' as http;

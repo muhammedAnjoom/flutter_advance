@@ -4,7 +4,6 @@ import 'package:get/state_manager.dart';
 import 'package:getx_project/data/response/status.dart';
 import 'package:getx_project/res/components/general_expection.dart';
 import 'package:getx_project/res/components/internet_expection_widget.dart';
-import 'package:getx_project/res/routes/routes.dart';
 import 'package:getx_project/res/routes/routes_name.dart';
 import 'package:getx_project/view_models/controller/home/home_view_model.dart';
 import 'package:getx_project/view_models/controller/user_preferences/user_preference_view_model.dart';
@@ -41,13 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   Get.toNamed(RouteName.loginScreen);
                 });
               },
-              icon: Icon(Icons.logout_outlined))
+              icon: const Icon(Icons.logout_outlined))
         ],
       ),
       body: Obx(() {
         switch (homeController.rxRequestStatus.value) {
           case Status.LOADING:
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           case Status.ERROR:

@@ -18,6 +18,7 @@ class InputEmailWidget extends StatelessWidget {
         if (value!.isEmpty) {
           Utils.snackBar("Email", "Enter email");
         }
+        return null;
       },
       onFieldSubmitted: (value) {
         Utils.fieldFocusChange(
