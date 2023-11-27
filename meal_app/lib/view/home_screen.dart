@@ -1,28 +1,46 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+
 import 'package:meal_app/controller/data.dart';
-import 'package:meal_app/model/meal_model.dart';
 import 'package:meal_app/view/core/font.dart';
 import 'package:meal_app/view/decription_screen.dart';
 import 'package:meal_app/view/widget/recipe_card.dart';
 
 import 'widget/recommended_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
-  ValueNotifier<List<Categories>> categoriesData = ValueNotifier([]);
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final itemController = Get.put(MealDB());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    MealDB().getMealData();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    itemController.onClose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final result = await MealDB().getMealData();
-      categoriesData.value.addAll(result);
-      categoriesData.notifyListeners();
-    });
+    // print(itemController.categoriesData.length);
+    // print("dat is ${data.length}");
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //    await MealDB().getMealData();
+    //    print(itemController.categoriesData.length);
+    // });
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -92,16 +110,13 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 240,
                   width: double.infinity,
-                  child: ValueListenableBuilder(
-                    valueListenable: categoriesData,
-                    builder: (context,item,_) {
-                      return ListView.builder(
-                        itemCount: item.length,
+                  child: Obx(() => ListView.builder(
+                        itemCount: itemController.categoriesData.length,
                         // shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          final data = item[index];
-                          print(data.strCategory);
+                          final data = itemController.categoriesData[index];
+                          print("no data");
                           return Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: GestureDetector(
@@ -120,14 +135,11 @@ class HomeScreen extends StatelessWidget {
                                 image: data.strCategoryThumb!,
                                 title: data.strCategory!,
                                 decription: data.strCategoryDescription!,
-
                               ),
                             ),
                           );
                         },
-                      );
-                    }
-                  ),
+                      )),
                 ),
                 SizedBox(
                   height: 10,
@@ -150,25 +162,21 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                ValueListenableBuilder(
-                  valueListenable: categoriesData,
-                  builder: (context,item,_) {
-                    return ListView.builder(
-                      itemCount: item.length,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        item.shuffle();
-                        final meal = item[index];
-                        return RecommendedCard(
-                          image: meal.strCategoryThumb,
-                          title: meal.strCategory,
-                        );
-                      },
-                    );
-                  }
-                )
-
+                Obx(
+                  () => ListView.builder(
+                    itemCount: itemController.bottomList.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                    //  itemController.bottomList.shuffle();
+                     final meal = itemController.bottomList[index];
+                      return RecommendedCard(
+                        image: meal.strCategoryThumb,
+                        title: meal.strCategory,
+                      );
+                    },
+                  ),
+                ),
                 // SizedBox(height: 100,)
               ],
             ),
@@ -177,4 +185,5 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
 }
