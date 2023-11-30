@@ -10,37 +10,33 @@ import 'package:meal_app/view/widget/recipe_card.dart';
 
 import 'widget/recommended_card.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
 
-class _HomeScreenState extends State<HomeScreen> {
   final itemController = Get.put(MealDB());
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    MealDB().getMealData();
-  }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    itemController.onClose();
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   MealDB().getMealData();
+  // }
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   itemController.onClose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     // print(itemController.categoriesData.length);
     // print("dat is ${data.length}");
-    // WidgetsBinding.instance.addPostFrameCallback((_) async {
-    //    await MealDB().getMealData();
-    //    print(itemController.categoriesData.length);
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+       await MealDB().getMealData();
+       print(itemController.categoriesData.length);
+    });
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
