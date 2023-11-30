@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:meal_app/view/decription_screen.dart';
-import 'package:meal_app/view/home_screen.dart';
-import 'package:meal_app/view/splash_screen.dart';
+import 'package:get/get.dart';
+import 'package:meal_app/res/routes/routes.dart';
+import 'package:meal_app/view/descripiton/decription_screen.dart';
+import 'package:meal_app/view/home/home_screen.dart';
+import 'package:meal_app/view/splash/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: SplashScreen(),
+      getPages: AppRoute.appRoute(),
     );
   }
 }

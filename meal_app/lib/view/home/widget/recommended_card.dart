@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../core/font.dart';
+import '../../core/font.dart';
 
 class RecommendedCard extends StatelessWidget {
   const RecommendedCard({
