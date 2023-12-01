@@ -1,7 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:meal_app/view/core/font.dart';
+import 'package:meal_app/res/colors/app_colors.dart';
+import 'package:meal_app/res/fonts/app_fonts.dart';
 
 class RecipeCard extends StatelessWidget {
   const RecipeCard({
@@ -24,7 +25,7 @@ class RecipeCard extends StatelessWidget {
               "https://images.unsplash.com/photo-1630851840633-f96999247032?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"),
           fit: BoxFit.cover,
         ),
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(10),
         ),
       ),
@@ -46,25 +47,18 @@ class RecipeCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      // Text(
-                      //   "Penne Pasta",
-                      //   style: gPrimaryFont.copyWith(
-                      //       color: Colors.white,
-                      //       fontSize: 16,
-                      //       fontWeight: FontWeight.bold),
-                      // ),
                       Text(
                         title,
-                        style: gPrimaryFont.copyWith(
-                          color: Colors.white,
+                        style: AppFonts.gPrimaryFont.copyWith(
+                          color: AppColor.whitColor,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -72,26 +66,27 @@ class RecipeCard extends StatelessWidget {
                         children: [
                           Text(
                             "30 MIN",
-                            style: gPrimaryFont.copyWith(
+                            style: AppFonts.gPrimaryFont.copyWith(
                                 fontWeight: FontWeight.w100,
-                                color: Colors.white),
+                                color: AppColor.whitColor),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Container(
-                            color: Color(0xffFC922F),
+                            color: AppColor.lightOrangeColor,
                             width: 1,
                             height: 20,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
                             "EASY",
-                            style: gPrimaryFont.copyWith(
-                                fontWeight: FontWeight.w100,
-                                color: Colors.white),
+                            style: AppFonts.gPrimaryFont.copyWith(
+                              fontWeight: FontWeight.w100,
+                              color: AppColor.lightOrangeColor,
+                            ),
                           )
                         ],
                       )
@@ -100,22 +95,22 @@ class RecipeCard extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Row(
               children: [
-                Spacer(),
+                const Spacer(),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
                     child: Container(
                       padding:
-                          EdgeInsets.symmetric(vertical: 4, horizontal: 10),
-                      color: Colors.black.withOpacity(0.12),
+                          const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+                      color: AppColor.blackColor.withOpacity(0.12),
                       child: Text(
                         "⭐ 4.8",
-                        style: gPrimaryFont.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                        style: AppFonts.gPrimaryFont.copyWith(
+                            color: AppColor.whitColor, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),

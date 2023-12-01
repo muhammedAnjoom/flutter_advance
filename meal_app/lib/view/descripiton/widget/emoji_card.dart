@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:meal_app/res/fonts/app_fonts.dart';
 
-import '../../core/font.dart';
 
 class EmojiCard extends StatelessWidget {
   const EmojiCard({
@@ -37,9 +37,9 @@ class EmojiCard extends StatelessWidget {
           ),
           Text(
             title,
-            style: gPrimaryFont.copyWith(fontSize: 16, color: colors),
+            style: AppFonts.gPrimaryFont.copyWith(fontSize: 16, color: colors),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           )
         ],

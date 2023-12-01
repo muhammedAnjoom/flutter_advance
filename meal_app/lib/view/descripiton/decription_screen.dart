@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:meal_app/view/core/font.dart';
+import 'package:meal_app/res/assets/icons_assets.dart';
+import 'package:meal_app/res/colors/app_colors.dart';
+import 'package:meal_app/res/fonts/app_fonts.dart';
 
 // import 'widget/Ingedients_card.dart';
 import 'widget/emoji_card.dart';
@@ -28,7 +30,7 @@ class DescriptionScreen extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 60,
                 ),
                 GestureDetector(
@@ -38,7 +40,7 @@ class DescriptionScreen extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 25,
                       child: SvgPicture.asset(
-                        "assets/icons/left-arrow.svg",
+                        AppIcons.leftArrowIcons,
                         width: 50,
                         height: 50,
                         // color: Colors.white,
@@ -57,8 +59,8 @@ class DescriptionScreen extends StatelessWidget {
               expand: false,
               builder: (context, scrollController) {
                 return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
+                  decoration: const BoxDecoration(
+                    color: AppColor.whitColor,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(40),
                         topRight: Radius.circular(40)),
@@ -68,60 +70,60 @@ class DescriptionScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 40,
                         ),
                         Text(
                           title ?? "Stuffed Chicken",
-                          style: gPrimaryFont.copyWith(
+                          style: AppFonts.gPrimaryFont.copyWith(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           "Ingredients:",
-                          style: gPrimaryFont.copyWith(
+                          style: AppFonts.gPrimaryFont.copyWith(
                               fontSize: 22, fontWeight: FontWeight.w600),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             EmojiCard(
-                              icon: "assets/icons/timer.svg",
+                              icon: AppIcons.timerIcons,
                               title: "40 MIN",
-                              colors: Colors.green[900]!,
+                              colors: AppColor.greenColor,
                               backgroundColor: Colors.green.withOpacity(0.50),
                             ),
                             EmojiCard(
-                              icon: "assets/icons/emoji.svg",
-                              colors: Colors.orange[900]!,
+                              icon: AppIcons.emojiIcons,
+                              colors: AppColor.orangeColor,
                               backgroundColor: Colors.orange.withOpacity(0.50),
                               title: "MEDIUM",
                             ),
                             EmojiCard(
-                              icon: "assets/icons/fire.svg",
-                              colors: Colors.blue[800]!,
+                              icon: AppIcons.fireIcons,
+                              colors: AppColor.blueColor,
                               backgroundColor: Colors.blue.withOpacity(0.50),
                               title: "300/cal",
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Text(
                           decription ??
                               "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times.[1] Beef is a source of high-quality protein and essential nutrients.[2]",
-                          style: gPrimaryFont.copyWith(
+                          style: AppFonts.gPrimaryFont.copyWith(
                             fontSize: 18,
                           ),
                           maxLines: 6,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Text(
                           "Directions :",
-                          style: gPrimaryFont.copyWith(
+                          style: AppFonts.gPrimaryFont.copyWith(
                               fontSize: 22, fontWeight: FontWeight.w600),
                         ),
                       ],

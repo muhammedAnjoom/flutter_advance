@@ -1,8 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:meal_app/res/colors/app_colors.dart';
+import 'package:meal_app/res/fonts/app_fonts.dart';
 
-import '../../core/font.dart';
 
 class RecommendedCard extends StatelessWidget {
   const RecommendedCard({
@@ -40,12 +41,12 @@ class RecommendedCard extends StatelessWidget {
                       margin: EdgeInsets.all(10),
                       padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
                       decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.15),
+                          color: AppColor.whitColor.withOpacity(0.15),
                           borderRadius: BorderRadius.circular(15)),
                       child: Text(
                         "⭐ 5.0",
-                        style: gPrimaryFont.copyWith(
-                            color: Colors.white,
+                        style: AppFonts.gPrimaryFont.copyWith(
+                            color: AppColor.whitColor,
                             fontSize: 12,
                             fontWeight: FontWeight.bold),
                       ),
@@ -62,12 +63,12 @@ class RecommendedCard extends StatelessWidget {
               children: [
                 Text(
                   title ?? "Muffins With coca\ncream",
-                  style: gPrimaryFont.copyWith(
+                  style: AppFonts.gPrimaryFont.copyWith(
                       fontWeight: FontWeight.w700, fontSize: 18),
                 ),
                 Text(
                   "By Emma Olivia",
-                  style: gPrimaryFont.copyWith(fontSize: 16),
+                  style: AppFonts.gPrimaryFont.copyWith(fontSize: 16),
                 ),
                 SizedBox(
                   height: 5,
@@ -76,7 +77,7 @@ class RecommendedCard extends StatelessWidget {
                   children: [
                     Text(
                       "🕢  20 Min",
-                      style: gPrimaryFont.copyWith(
+                      style: AppFonts.gPrimaryFont.copyWith(
                         fontSize: 14,
                       ),
                     ),
@@ -85,7 +86,7 @@ class RecommendedCard extends StatelessWidget {
                     ),
                     Text(
                       "😄 EASY",
-                      style: gPrimaryFont.copyWith(
+                      style: AppFonts.gPrimaryFont.copyWith(
                         fontSize: 14,
                       ),
                     ),

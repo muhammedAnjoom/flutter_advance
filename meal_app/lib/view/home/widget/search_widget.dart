@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:meal_app/res/assets/icons_assets.dart';
 import 'package:meal_app/res/colors/app_colors.dart';
 import 'package:meal_app/res/contents/app_contents.dart';
-import 'package:meal_app/view/core/font.dart';
+import 'package:meal_app/res/fonts/app_fonts.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({super.key});
@@ -17,7 +17,7 @@ class SearchWidget extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           hintText: AppContent.searchTitle,
-          hintStyle: gPrimaryFont.copyWith(color: AppColor.search),
+          hintStyle: AppFonts.gPrimaryFont.copyWith(color: AppColor.search),
           prefixIcon: SvgPicture.asset(
             AppIcons.searchIcons,
             width: 30,
@@ -32,7 +32,7 @@ class SearchWidget extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(20)),
               borderSide: BorderSide.none),
           fillColor: const Color(0xffF3F3F3),
-          focusColor: Colors.grey),
+          focusColor: AppColor.greyColor),
     );
   }
 }

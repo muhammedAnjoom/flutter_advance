@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meal_app/view/core/font.dart';
+import 'package:meal_app/res/fonts/app_fonts.dart';
 
 class Ingredients extends StatelessWidget {
   const Ingredients({
@@ -14,13 +14,13 @@ class Ingredients extends StatelessWidget {
           radius: 5,
           backgroundColor: Colors.amber[800],
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Expanded(
           child: Text(
             "4 boneless skinless chicken breats kosher salt",
-            style: gPrimaryFont.copyWith(
+            style: AppFonts.gPrimaryFont.copyWith(
                 fontSize: 16,
                 color: Colors.grey[800],
                 overflow: TextOverflow.ellipsis),

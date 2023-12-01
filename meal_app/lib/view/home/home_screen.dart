@@ -9,7 +9,6 @@ import 'package:meal_app/res/colors/app_colors.dart';
 import 'package:meal_app/res/contents/app_contents.dart';
 import 'package:meal_app/res/fonts/app_fonts.dart';
 import 'package:meal_app/res/routes/route_names.dart';
-import 'package:meal_app/view/core/font.dart';
 import 'package:meal_app/view/descripiton/decription_screen.dart';
 import 'package:meal_app/view/home/widget/recipe_card.dart';
 import 'package:meal_app/view/home/widget/search_widget.dart';
@@ -110,7 +109,7 @@ class HomeScreen extends StatelessWidget {
                     const Spacer(),
                     Text(
                       "See All",
-                      style: gPrimaryFont.copyWith(
+                      style: AppFonts.gPrimaryFont.copyWith(
                           color: AppColor.blackGreyColor, fontSize: 16),
                     )
                   ],
