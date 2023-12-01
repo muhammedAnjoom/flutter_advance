@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import 'package:meal_app/controller/data.dart';
 import 'package:meal_app/res/assets/icons_assets.dart';
 import 'package:meal_app/res/colors/app_colors.dart';
 import 'package:meal_app/res/contents/app_contents.dart';
@@ -12,18 +11,20 @@ import 'package:meal_app/res/routes/route_names.dart';
 import 'package:meal_app/view/descripiton/decription_screen.dart';
 import 'package:meal_app/view/home/widget/recipe_card.dart';
 import 'package:meal_app/view/home/widget/search_widget.dart';
+import 'package:meal_app/view_models/controller/home/home_view_model.dart';
 
 import 'widget/recommended_card.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  final itemController = Get.put(MealDB());
+  final itemController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await MealDB().getMealData();
+      itemController.getDataList();
+      print(itemController.loading.value);
     });
     return Scaffold(
       body: SafeArea(
@@ -60,8 +61,8 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Text(
                   "Today recipe",
-                  style: AppFonts.gPrimaryFont.copyWith(
-                      fontSize: 22, fontWeight: FontWeight.w600),
+                  style: AppFonts.gPrimaryFont
+                      .copyWith(fontSize: 22, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(
                   height: 10,
@@ -75,6 +76,8 @@ class HomeScreen extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           final data = itemController.categoriesData[index];
+                          print(itemController.loading.value);
+
                           return Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: GestureDetector(
@@ -86,7 +89,8 @@ class HomeScreen extends StatelessWidget {
                                       decription: data.strCategoryDescription,
                                     ));
                               },
-                              child: RecipeCard(
+                              child:
+                               RecipeCard(
                                 image: data.strCategoryThumb!,
                                 title: data.strCategory!,
                                 decription: data.strCategoryDescription!,
@@ -103,8 +107,8 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Text(
                       "Recommended",
-                      style: AppFonts.gPrimaryFont.copyWith(
-                          fontSize: 22, fontWeight: FontWeight.w600),
+                      style: AppFonts.gPrimaryFont
+                          .copyWith(fontSize: 22, fontWeight: FontWeight.w600),
                     ),
                     const Spacer(),
                     Text(

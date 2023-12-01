@@ -85,7 +85,7 @@ class RecipeCard extends StatelessWidget {
                             "EASY",
                             style: AppFonts.gPrimaryFont.copyWith(
                               fontWeight: FontWeight.w100,
-                              color: AppColor.lightOrangeColor,
+                              color: AppColor.whitColor,
                             ),
                           )
                         ],
