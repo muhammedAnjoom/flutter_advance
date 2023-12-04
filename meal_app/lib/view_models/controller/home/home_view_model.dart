@@ -20,7 +20,7 @@ class HomeController extends GetxController {
         categoriesData.addAll(categoriesItem);
         bottomList.addAll(categoriesItem);
         bottomList.shuffle();
-        // loading.value = false;
+        loading.value = false;
       }
     }).onError((error, stackTrace) {
       errorRx.value = error.toString();

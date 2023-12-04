@@ -67,39 +67,46 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                SizedBox(
-                  height: 240,
-                  width: double.infinity,
-                  child: Obx(() => ListView.builder(
-                        itemCount: itemController.categoriesData.length,
-                        // shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          final data = itemController.categoriesData[index];
-                          print(itemController.loading.value);
+                Obx(() {
+                  return itemController.loading.value == true
+                      ? Center(child: CircularProgressIndicator())
+                      : SizedBox(
+                          height: 240,
+                          width: double.infinity,
+                          child: Obx(() => ListView.builder(
+                                itemCount: itemController.categoriesData.length,
+                                // shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  final data =
+                                      itemController.categoriesData[index];
+                                  print(itemController.loading.value);
 
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.toNamed(RouteName.descripitonScren,
-                                    arguments: DescriptionScreen(
-                                      backgroundImage: data.strCategoryThumb,
-                                      title: data.strCategory,
-                                      decription: data.strCategoryDescription,
-                                    ));
-                              },
-                              child:
-                               RecipeCard(
-                                image: data.strCategoryThumb!,
-                                title: data.strCategory!,
-                                decription: data.strCategoryDescription!,
-                              ),
-                            ),
-                          );
-                        },
-                      )),
-                ),
+                                  return Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed(RouteName.descripitonScren,
+                                            arguments: DescriptionScreen(
+                                              backgroundImage:
+                                                  data.strCategoryThumb,
+                                              title: data.strCategory,
+                                              decription:
+                                                  data.strCategoryDescription,
+                                            ));
+                                      },
+                                      child: RecipeCard(
+                                        image: data.strCategoryThumb!,
+                                        title: data.strCategory!,
+                                        decription:
+                                            data.strCategoryDescription!,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )),
+                        );
+                }),
                 const SizedBox(
                   height: 10,
                 ),
