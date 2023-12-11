@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:meal_app/res/colors/app_colors.dart';
 import 'package:meal_app/res/fonts/app_fonts.dart';
 
-
 class RecommendedCard extends StatelessWidget {
   const RecommendedCard({
-    super.key, this.image, this.title,
+    super.key,
+    this.image,
+    this.title,
   });
 
   final String? image;
@@ -28,7 +29,8 @@ class RecommendedCard extends StatelessWidget {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage(
-                    image?? "https://images.unsplash.com/photo-1505253758473-96b7015fcd40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    image ??
+                        "https://images.unsplash.com/photo-1505253758473-96b7015fcd40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
                   ),
                 ),
               ),
@@ -39,7 +41,8 @@ class RecommendedCard extends StatelessWidget {
                     filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
                     child: Container(
                       margin: EdgeInsets.all(10),
-                      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 4, horizontal: 10),
                       decoration: BoxDecoration(
                           color: AppColor.whitColor.withOpacity(0.15),
                           borderRadius: BorderRadius.circular(15)),
@@ -63,8 +66,8 @@ class RecommendedCard extends StatelessWidget {
               children: [
                 Text(
                   title ?? "Muffins With coca\ncream",
-                  style: AppFonts.gPrimaryFont.copyWith(
-                      fontWeight: FontWeight.w700, fontSize: 18),
+                  style: AppFonts.gPrimaryFont
+                      .copyWith(fontWeight: FontWeight.w700, fontSize: 18),
                 ),
                 Text(
                   "By Emma Olivia",
@@ -100,3 +103,5 @@ class RecommendedCard extends StatelessWidget {
     );
   }
 }
+
+

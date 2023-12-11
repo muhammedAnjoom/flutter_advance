@@ -104,13 +104,14 @@ class RecipeCard extends StatelessWidget {
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
                     child: Container(
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 10),
                       color: AppColor.blackColor.withOpacity(0.12),
                       child: Text(
                         "⭐ 4.8",
                         style: AppFonts.gPrimaryFont.copyWith(
-                            color: AppColor.whitColor, fontWeight: FontWeight.bold),
+                            color: AppColor.whitColor,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -123,3 +124,4 @@ class RecipeCard extends StatelessWidget {
     );
   }
 }
+

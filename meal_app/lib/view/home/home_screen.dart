@@ -8,11 +8,13 @@ import 'package:meal_app/res/colors/app_colors.dart';
 import 'package:meal_app/res/contents/app_contents.dart';
 import 'package:meal_app/res/fonts/app_fonts.dart';
 import 'package:meal_app/res/routes/route_names.dart';
+import 'package:meal_app/utils/loading_card_widget.dart';
 import 'package:meal_app/view/descripiton/decription_screen.dart';
 import 'package:meal_app/view/home/widget/recipe_card.dart';
 import 'package:meal_app/view/home/widget/search_widget.dart';
 import 'package:meal_app/view_models/controller/home/home_view_model.dart';
 
+import '../../utils/loading_recomand_card_widget.dart';
 import 'widget/recommended_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -67,46 +69,45 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                Obx(() {
-                  return itemController.loading.value == true
-                      ? Center(child: CircularProgressIndicator())
-                      : SizedBox(
-                          height: 240,
-                          width: double.infinity,
-                          child: Obx(() => ListView.builder(
-                                itemCount: itemController.categoriesData.length,
-                                // shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  final data =
-                                      itemController.categoriesData[index];
-                                  print(itemController.loading.value);
+                // return itemController.loading.value == true
+                //     ? Center(child: CircularProgressIndicator())
+                SizedBox(
+                  height: 240,
+                  width: double.infinity,
+                  child: Obx(() => ListView.builder(
+                        itemCount: itemController.categoriesData.length,
+                        // shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final data = itemController.categoriesData[index];
+                          // print(itemController.loading.value);
 
-                                  return Padding(
-                                    padding: const EdgeInsets.only(right: 10),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(RouteName.descripitonScren,
-                                            arguments: DescriptionScreen(
-                                              backgroundImage:
-                                                  data.strCategoryThumb,
-                                              title: data.strCategory,
-                                              decription:
-                                                  data.strCategoryDescription,
-                                            ));
-                                      },
-                                      child: RecipeCard(
-                                        image: data.strCategoryThumb!,
-                                        title: data.strCategory!,
-                                        decription:
-                                            data.strCategoryDescription!,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              )),
-                        );
-                }),
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Obx(() => GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(RouteName.descripitonScren,
+                                        arguments: DescriptionScreen(
+                                          backgroundImage:
+                                              data.strCategoryThumb,
+                                          title: data.strCategory,
+                                          decription:
+                                              data.strCategoryDescription,
+                                        ));
+                                  },
+                                  child: itemController.loading.value == true
+                                      ? SketlonWidget()
+                                      : RecipeCard(
+                                          image: data.strCategoryThumb!,
+                                          title: data.strCategory!,
+                                          decription:
+                                              data.strCategoryDescription!,
+                                        ),
+                                )),
+                          );
+                        },
+                      )),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -129,18 +130,29 @@ class HomeScreen extends StatelessWidget {
                   height: 10,
                 ),
                 Obx(
-                  () => ListView.builder(
+                  () {return ListView.builder(
                     itemCount: itemController.bottomList.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       final meal = itemController.bottomList[index];
-                      return RecommendedCard(
-                        image: meal.strCategoryThumb,
-                        title: meal.strCategory,
-                      );
+                      print(itemController.loading.value);
+                      return Obx(() => itemController.loading.value == true
+                          ? RecommendedCardLoding()
+                          : RecommendedCard(
+                              image: meal.strCategoryThumb,
+                              title: meal.strCategory,
+                            ));
+                      // return itemController.loading.value == true
+                      //     ? RecommendedCardLoding()
+                      //     : RecommendedCard(
+                      //         image: meal.strCategoryThumb,
+                      //         title: meal.strCategory,
+                      //       );
+                     
                     },
-                  ),
+                  );
+                  }
                 ),
                 // SizedBox(height: 100,)
               ],

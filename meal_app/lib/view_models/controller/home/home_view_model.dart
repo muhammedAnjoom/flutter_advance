@@ -10,7 +10,7 @@ class HomeController extends GetxController {
   RxString errorRx = ''.obs;
   RxBool loading = false.obs;
   void getDataList() {
-    loading.value=true;
+    loading.value = true;
     _api.mealList().then((value) {
       final categoriesItem = value.categories;
       if (categoriesItem == null) {
@@ -20,7 +20,9 @@ class HomeController extends GetxController {
         categoriesData.addAll(categoriesItem);
         bottomList.addAll(categoriesItem);
         bottomList.shuffle();
-        loading.value = false;
+        Future.delayed(Duration(seconds: 2))
+            .then((value) => loading.value = false);
+        // loading.value = false;
       }
     }).onError((error, stackTrace) {
       errorRx.value = error.toString();
