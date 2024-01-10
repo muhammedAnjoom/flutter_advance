@@ -81,8 +81,8 @@ class PostPage extends StatelessWidget {
                                 child: Text("${index + 1}"),
                               ),
                             ),
-                            title: Text(item['title']),
-                            subtitle: Text(item['description']),
+                            title: Text(item.title),
+                            subtitle: Text(item.body),
                           ),
                         );
                       });

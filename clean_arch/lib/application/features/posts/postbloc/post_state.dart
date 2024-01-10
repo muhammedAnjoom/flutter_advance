@@ -11,7 +11,7 @@ class PostInitial extends PostState {}
 class PostStateLoading extends PostState {}
 
 class PostStateLoaded extends PostState {
-  final List<Map<String, dynamic>> posts;
+  final List<PostEntity> posts;
   PostStateLoaded({
     required this.posts,
   });
