@@ -9,23 +9,26 @@ part 'number_quote_state.dart';
 
 class NumberQuoteBloc extends Bloc<NumberQuoteEvent, NumberQuoteState> {
   NumberQuoteBloc() : super(NumberQuoteInitial()) {
-    on<NumberQuoteRequestsEvent>((event, emit) async{
-      // TODO: implement event handler
+    on<NumberQuoteRequestsEvent>((event, emit) async {
       late NumFactResp quote;
-      try{
+      try {
         emit(NumberQuoteLoadingState());
-        await Future.delayed(Duration(seconds: 2)).then((value) async{
-          quote= await getNumberData(number: event.number);
-          print(quote.text);
-          if(quote.text!.isEmpty){
-            emit(NumberQuoteErrorState(message: "No Data"));
-          }else if(quote.text!.isNotEmpty){
-            emit(NumberQuoteLoadedState(quote: quote));
-          }else{
-            emit(NumberQuoteErrorState(message: "no date"));
+        await Future.delayed(const Duration(seconds: 2)).then((value) async {
+          final num = int.parse(event.number);
+          quote = await getNumberData(number: num);
+
+          if (quote.text!.isEmpty) {
+            emit(NumberQuoteErrorState(message: "No data in record"));
+          } else if (quote.text!.isNotEmpty) {
+            final quoteOnly = quote.text!.split('${quote.number!} is ');
+            emit(NumberQuoteLoadedState(quote: quoteOnly[1]));
+          } else {
+            emit(NumberQuoteErrorState(message: "No data in record"));
           }
         });
-      }catch(e){
+      } on FormatException catch (_) {
+        emit(NumberQuoteErrorState(message: "Must enter number..."));
+      } catch (e) {
         emit(NumberQuoteErrorState(message: e.toString()));
       }
     });

@@ -8,7 +8,7 @@ class NumberQuoteInitial extends NumberQuoteState {}
 class NumberQuoteLoadingState extends NumberQuoteState {}
 
 class NumberQuoteLoadedState extends NumberQuoteState {
-  final NumFactResp quote;
+  final String quote;
   NumberQuoteLoadedState({
     required this.quote,
   });

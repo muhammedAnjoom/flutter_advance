@@ -4,7 +4,7 @@ part of 'number_quote_bloc.dart';
 abstract class NumberQuoteEvent {}
 
 class NumberQuoteRequestsEvent extends NumberQuoteEvent {
-  final int number;
+  final String number;
 
   NumberQuoteRequestsEvent({
     required this.number,
