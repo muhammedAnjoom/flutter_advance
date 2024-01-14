@@ -3,6 +3,8 @@ import 'package:api_proj/application/features/numberQuote/bloc/number_quote_bloc
 import 'package:api_proj/application/features/numberQuote/widget/erorr_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 import 'widget/context_show.dart';
 
@@ -43,7 +45,11 @@ class NumberQuoteScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [CircularProgressIndicator()],
+                        children: [
+                          SpinKitCircle(
+                            color: Colors.purple,
+                          ),
+                        ],
                       ),
                     );
                   } else if (state is NumberQuoteLoadedState) {
@@ -53,16 +59,23 @@ class NumberQuoteScreen extends StatelessWidget {
                   } else if (state is NumberQuoteErrorState) {
                     return ErrorShowWidget(message: state.message);
                   } else {
-                    return const Expanded(
+                    return Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.error_outline,
-                            color: Colors.red,
+                          const Icon(
+                            Icons.emoji_emotions,
+                            size: 30,
                           ),
-                          Text("no data")
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Enter number you get quote..",
+                            style: AppFonts.primaryText.copyWith(
+                                fontSize: 18, fontWeight: FontWeight.w600),
+                          )
                           // CircularProgressIndicator()
                         ],
                       ),
@@ -119,9 +132,15 @@ class NumberQuoteScreen extends StatelessWidget {
                                 .add(NumberQuoteRequestsEvent(number: num));
                           }
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Icon(Icons.add),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: SvgPicture.asset(
+                            'assets/telegram.svg',
+                            width: 40,
+                            height: 40,
+                          ),
                         ),
                       ),
                     ],
