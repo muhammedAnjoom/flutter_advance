@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "979501726138",
+    "project_id": "loginbloc-2d525",
+    "storage_bucket": "loginbloc-2d525.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979501726138:android:3c09312999d4d225a7c583",
+        "android_client_info": {
+          "package_name": "com.example.login_bloc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvospSIpQ4Ly5WLU0qZhpxLoljfl4b-S4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
