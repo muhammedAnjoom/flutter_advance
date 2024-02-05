@@ -1,6 +1,11 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:login_bloc/application/features/auth/views/login_view.dart';
+import 'package:login_bloc/application/features/auth/views/user_register_view.dart';
+import 'package:login_bloc/application/features/home/view/home_)view.dart';
 import 'package:login_bloc/firebase_options.dart';
 
 import 'application/features/splash/view/splash_view.dart';
@@ -31,7 +36,12 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialRoute: '/',
-      routes: {'/': (context) => SplashScreen()},
+      routes: {
+        '/': (context) => SplashPageRrapper(),
+        '/login':(context)=>LoginView(),
+        '/home':(context)=>HomePage(),
+        '/register':(context)=>UserRegister()
+      },
     );
   }
 }
