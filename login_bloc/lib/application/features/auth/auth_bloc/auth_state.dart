@@ -21,3 +21,9 @@ class AuthenticatedError extends AuthState {
     required this.message,
   });
 }
+
+class PhoneVerfiedState extends AuthState{
+  final String verficationCode;
+
+  PhoneVerfiedState({required this.verficationCode});
+}

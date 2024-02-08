@@ -3,11 +3,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:login_bloc/application/features/auth/model/user_model.dart';
 import 'package:login_bloc/application/features/auth/views/login_view.dart';
+import 'package:login_bloc/application/features/auth/views/phone_register.dart';
 import 'package:login_bloc/application/features/auth/views/user_register_view.dart';
 import 'package:login_bloc/application/features/home/view/home_)view.dart';
 import 'package:login_bloc/firebase_options.dart';
 
+import 'application/features/auth/views/opt_view.dart';
 import 'application/features/splash/view/splash_view.dart';
 
 void main() async {
@@ -38,9 +41,10 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => SplashPageRrapper(),
-        '/login':(context)=>LoginView(),
-        '/home':(context)=>HomePage(),
-        '/register':(context)=>UserRegister()
+        '/login': (context) => LoginRapper(),
+        '/home': (context) => HomeRapper(),
+        '/register': (context) => UserRegisterRapper(),
+        '/phoneLogin': (context) => PhoneRapper(),
       },
     );
   }
