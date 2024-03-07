@@ -120,5 +120,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthenticatedError(message: e.toString()));
       }
     });
+    on<RestPassswordEvent>((event,emit)async{
+      try {
+        await _auth.sendPasswordResetEmail(email: event.email).then((value){
+          SnackBar snak=SnackBar(content: Text("you to your email"));
+          ScaffoldMessenger.of(event.context).showSnackBar(snak);
+        } );
+      } catch (e) {
+        
+      }
+    });
   }
 }

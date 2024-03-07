@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_bloc/application/features/auth/auth_bloc/auth_bloc.dart';
+import 'package:login_bloc/application/features/auth/views/forget_passwor_view.dart';
 
 class LoginRapper extends StatelessWidget {
   const LoginRapper({super.key});
@@ -97,13 +98,15 @@ class LoginView extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        BlocProvider.of<AuthBloc>(context).add(LoginGoogleEvent());
+                        BlocProvider.of<AuthBloc>(context)
+                            .add(LoginGoogleEvent());
                       },
                       icon: Icon(Icons.login),
                     ),
                     InkResponse(
                       onTap: () {
-                        Navigator.pushNamed(context, '/phoneLogin');
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) => FrogetPasswordRapper()));
                       },
                       child: Text(
                         "Phone?",

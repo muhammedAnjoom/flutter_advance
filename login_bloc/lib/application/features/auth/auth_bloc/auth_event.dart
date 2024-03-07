@@ -28,17 +28,23 @@ class LogoutEvent extends AuthEvent {}
 class PhoneNumberLoginEvent extends AuthEvent {
   final String phone;
 
-  PhoneNumberLoginEvent({
-    required this.phone
-  });
+  PhoneNumberLoginEvent({required this.phone});
 }
 
-class OtpSentEvent extends AuthEvent{
+class OtpSentEvent extends AuthEvent {
   final String otp;
   final String verficationCode;
 
-  OtpSentEvent({required this.otp,required this.verficationCode});
-
+  OtpSentEvent({required this.otp, required this.verficationCode});
 }
 
-class LoginGoogleEvent extends AuthEvent{}
+class RestPassswordEvent extends AuthEvent {
+  final String email;
+  final BuildContext context;
+  RestPassswordEvent({
+    required this.email,
+    required this.context
+  });
+}
+
+class LoginGoogleEvent extends AuthEvent {}
